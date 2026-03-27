@@ -87,7 +87,7 @@ A aplicação ficará disponível no host configurado pelo Vite (porta padrão d
 
 ## Variáveis de ambiente
 
-As variáveis abaixo são lidas pelo frontend (prefixo VITE_):
+As variáveis abaixo são lidas pelo frontend (prefixo VITE\_):
 
 - VITE_OAUTH_PORTAL_URL
 - VITE_APP_ID
@@ -132,15 +132,19 @@ Isso garante compatibilidade com roteamento client-side da SPA.
 Quando o deploy "sobe" mas o site não carrega corretamente, os problemas mais comuns são:
 
 1. Diretório de saída incorreto
+
 - O Vercel precisa apontar para dist/public (não para dist).
 
 2. Falta de rewrite para SPA
+
 - Rotas internas precisam redirecionar para /index.html.
 
 3. Variáveis de ambiente ausentes
-- Verificar todas as VITE_ no painel do projeto no Vercel.
+
+- Verificar todas as VITE\_ no painel do projeto no Vercel.
 
 4. Comando de build incompatível com o alvo
+
 - Para deploy estático no Vercel, o build recomendado neste projeto é pnpm vite build.
 
 ## Observações sobre o servidor (server/index.ts)
@@ -153,7 +157,7 @@ const port = process.env.PORT || 3e3;
 
 ## Melhorias futuras sugeridas
 
-- Criar arquivo .env.example com todas as variáveis VITE_
+- Criar arquivo .env.example com todas as variáveis VITE\_
 - Adicionar testes de componentes críticos (Home, Projects, Contact)
 - Adicionar verificação de variáveis obrigatórias no startup do app
 - Configurar pipeline de CI para lint, check e build
