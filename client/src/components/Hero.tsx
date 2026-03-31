@@ -1,9 +1,16 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { AnimatedGear } from './AnimatedGear';
 import { ArrowRight, Github, Mail, Linkedin } from 'lucide-react';
 
-export const Hero: React.FC = () => {
+type HeroTab = 'about' | 'projects' | 'contact';
+
+interface HeroProps {
+  onNavigate?: (tab: HeroTab) => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
       {/* Background with hero image */}
@@ -44,7 +51,7 @@ export const Hero: React.FC = () => {
 
           {/* Main heading */}
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900 leading-tight">
-            Engenheiro de <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Produção</span> & <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">Pesquisador</span>
+            Engenheiro de <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">Produção</span>, <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-violet-600">Programador</span> e <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">Pesquisador</span>
           </h1>
 
           {/* Subtitle */}
@@ -55,47 +62,60 @@ export const Hero: React.FC = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mb-12 md:justify-start justify-center">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white border-0 font-semibold"
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Ver Projetos <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-gray-300 text-gray-900 hover:bg-gray-50"
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Entrar em Contato
-            </Button>
+            <motion.div whileTap={{ scale: 0.96 }} whileHover={{ y: -2 }} transition={{ duration: 0.18 }}>
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white border-0 font-semibold"
+                onClick={() => onNavigate?.('projects')}
+              >
+                Ver Projetos <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </motion.div>
+            <motion.div whileTap={{ scale: 0.96 }} whileHover={{ y: -2 }} transition={{ duration: 0.18 }}>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-gray-300 text-gray-900 hover:bg-gray-50"
+                onClick={() => onNavigate?.('contact')}
+              >
+                Entrar em Contato
+              </Button>
+            </motion.div>
           </div>
 
           {/* Social Links */}
           <div className="flex gap-6 md:justify-start justify-center">
-            <a
+            <motion.a
               href="https://github.com/FilipePessoa30"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-gray-100 hover:bg-cyan-100 text-gray-700 hover:text-cyan-600 transition-all duration-300 hover:scale-110"
+              whileHover={{ y: -4, rotate: -4 }}
+              whileTap={{ scale: 0.88, rotate: 8 }}
+              transition={{ type: 'spring', stiffness: 350, damping: 16 }}
             >
               <Github className="w-5 h-5" />
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               href="mailto:Filipe.Pessoa18@gmail.com"
               className="p-3 rounded-full bg-gray-100 hover:bg-orange-100 text-gray-700 hover:text-orange-600 transition-all duration-300 hover:scale-110"
+              whileHover={{ y: -4, rotate: 4 }}
+              whileTap={{ scale: 0.88, rotate: -8 }}
+              transition={{ type: 'spring', stiffness: 350, damping: 16 }}
             >
               <Mail className="w-5 h-5" />
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               href="https://linktr.ee/filipe.pessoa18"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-gray-100 hover:bg-blue-100 text-gray-700 hover:text-blue-600 transition-all duration-300 hover:scale-110"
+              whileHover={{ y: -4, rotate: -4 }}
+              whileTap={{ scale: 0.88, rotate: 8 }}
+              transition={{ type: 'spring', stiffness: 350, damping: 16 }}
             >
               <Linkedin className="w-5 h-5" />
-            </a>
+            </motion.a>
           </div>
         </div>
       </div>

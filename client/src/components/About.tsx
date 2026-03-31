@@ -48,6 +48,8 @@ export const About: React.FC = () => {
               <h3 className="text-xl font-bold text-gray-900">Experiência</h3>
             </div>
             <ul className="space-y-3 text-sm text-gray-700">
+              <li className="font-semibold">💻 Programador Freelancer</li>
+              <li className="text-xs text-gray-600">Projetos sob demanda • 2021-atual</li>
               <li className="font-semibold">👨‍🏫 Professor de Matemática e Informática</li>
               <li className="text-xs text-gray-600">Projeto Uerê • 2025-atual</li>
               <li className="font-semibold mt-4">🔬 Pesquisador Bolsista</li>
