@@ -1,116 +1,130 @@
 import React from 'react';
 import { AnimatedGear } from './AnimatedGear';
-import { GraduationCap, Briefcase, Award } from 'lucide-react';
+
+interface ExperienceItem {
+  role: string;
+  org: string;
+  period: string;
+  color: string;
+}
+
+interface Skill {
+  cat: string;
+  items: string[];
+}
 
 export const About: React.FC = () => {
+  const skills: Skill[] = [
+    { cat: 'Linguagens', items: ['Python', 'C++', 'R', 'JavaScript', 'SQL'] },
+    { cat: 'Otimização & ML', items: ['Pyomo', 'Gurobi', 'scikit-learn', 'PyTorch', 'TensorFlow'] },
+    { cat: 'Dados & Ferramentas', items: ['Pandas', 'NumPy', 'Git', 'Docker', 'LaTeX'] },
+  ];
+
+  const experience: ExperienceItem[] = [
+    { role: 'Doutorando — Ciências Computacionais', org: 'UERJ · Bolsista CAPES', period: '2024 — presente', color: '#8b1e3f' },
+    { role: 'Mestre em Engenharia de Produção', org: 'UFF · Otimização e IA', period: '2022 — 2024', color: '#00c853' },
+    { role: 'Engenheiro de Produção', org: 'UFF · Bacharelado', period: '2017 — 2022', color: '#1e4e8c' },
+  ];
+
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
-      {/* Decorative gears */}
-      <div className="absolute top-20 left-5 z-0 opacity-5">
-        <AnimatedGear size={300} speed="slow" color="#1a1a1a" opacity={0.05} />
-      </div>
-      <div className="absolute bottom-10 right-10 z-0 opacity-5">
-        <AnimatedGear size={250} speed="medium" color="#00d9ff" opacity={0.05} />
-      </div>
-
-      <div className="container max-w-6xl mx-auto px-4 relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center text-gray-900">
-          Sobre Mim
-        </h2>
-
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {/* Education */}
-          <div className="bg-white rounded-lg p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-cyan-200 transition-all duration-300">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-lg">
-                <GraduationCap className="w-6 h-6 text-cyan-600" />
+    <section style={{position:'relative',padding:'120px 32px',background:'#fff'}} data-screen-label="About">
+      <div style={{maxWidth:1100,margin:'0 auto',position:'relative'}}>
+        <ScrollReveal>
+          <SectionHeading kicker="01 · SOBRE MIM" title="Ciência computacional aplicada a problemas reais."/>
+        </ScrollReveal>
+        
+        <div style={{display:'grid',gridTemplateColumns:'1.3fr 1fr',gap:56,alignItems:'start'}}>
+          <ScrollReveal distance={40}>
+            <p style={{fontSize:18,lineHeight:1.65,color:'var(--fp-fg-2)',margin:'0 0 20px'}}>
+              Engenheiro de Produção pela UFF, Mestre na mesma área e atualmente Doutorando em
+              Ciências Computacionais na UERJ, com bolsa CAPES. Minha pesquisa investiga a interseção
+              entre <strong style={{color:'var(--fp-fg-1)'}}>otimização matemática</strong> e{' '}
+              <strong style={{color:'var(--fp-fg-1)'}}>aprendizado de máquina</strong> para sistemas
+              industriais complexos.
+            </p>
+            <p style={{fontSize:16,lineHeight:1.65,color:'var(--fp-fg-2)',margin:0}}>
+              Trabalho com Python, C++ e R, com foco em algoritmos de otimização combinatória,
+              simulação estocástica e modelos preditivos. Interesse especial por problemas
+              que combinam precisão quantitativa e impacto industrial tangível.
+            </p>
+          </ScrollReveal>
+          
+          <ScrollReveal distance={40} style={{display:'flex',flexDirection:'column',gap:14}}>
+            {experience.map((e,i) => (
+              <div key={i} style={{padding:'18px 20px',background:'var(--fp-bg-2)',border:'1px solid var(--fp-border)',borderRadius:14,borderLeft:`3px solid ${e.color}`}}>
+                <div style={{fontFamily:'var(--fp-font-mono)',fontSize:11,color:'var(--fp-fg-3)',marginBottom:4}}>{e.period}</div>
+                <div style={{fontSize:15,fontWeight:700,color:'var(--fp-fg-1)'}}>{e.role}</div>
+                <div style={{fontSize:13,color:'var(--fp-fg-2)',marginTop:2}}>{e.org}</div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900">Formação</h3>
-            </div>
-            <ul className="space-y-3 text-sm text-gray-700">
-              <li className="font-semibold">🎓 Doutorado em Ciências Computacionais</li>
-              <li className="text-xs text-gray-600">UERJ • 2023-2027 (Bolsista CAPES)</li>
-              <li className="font-semibold mt-4">📚 Licenciatura em Matemática</li>
-              <li className="text-xs text-gray-600">UFF • 2023-2027</li>
-              <li className="font-semibold mt-4">🏆 Mestrado em Ciências Computacionais</li>
-              <li className="text-xs text-gray-600">UERJ • 2022-2023 (Bolsista CAPES)</li>
-              <li className="font-semibold mt-4">⚙️ Engenharia de Produção</li>
-              <li className="text-xs text-gray-600">UERJ • 2015-2021</li>
-            </ul>
-          </div>
-
-          {/* Experience */}
-          <div className="bg-white rounded-lg p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-orange-200 transition-all duration-300">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 bg-gradient-to-br from-orange-100 to-red-100 rounded-lg">
-                <Briefcase className="w-6 h-6 text-orange-600" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900">Experiência</h3>
-            </div>
-            <ul className="space-y-3 text-sm text-gray-700">
-              <li className="font-semibold">💻 Programador Freelancer</li>
-              <li className="text-xs text-gray-600">Projetos sob demanda • 2021-atual</li>
-              <li className="font-semibold">👨‍🏫 Professor de Matemática e Informática</li>
-              <li className="text-xs text-gray-600">Projeto Uerê • 2025-atual</li>
-              <li className="font-semibold mt-4">🔬 Pesquisador Bolsista</li>
-              <li className="text-xs text-gray-600">UFRJ • 2014-2016</li>
-              <li className="font-semibold mt-4">📊 Revisor de Periódico</li>
-              <li className="text-xs text-gray-600">Simpósio Brasileiro de Pesquisa Operacional • 2025</li>
-              <li className="font-semibold mt-4">💼 Auxiliar Administrativo</li>
-              <li className="text-xs text-gray-600">Instituto de Educação Nossa Senhora de Lourdes • 2017-2019</li>
-            </ul>
-          </div>
-
-          {/* Skills */}
-          <div className="bg-white rounded-lg p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-green-200 transition-all duration-300">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg">
-                <Award className="w-6 h-6 text-green-600" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900">Competências</h3>
-            </div>
-            <div className="space-y-4 text-sm text-gray-700">
-              <div>
-                <p className="font-semibold mb-2">Programação</p>
-                <div className="flex flex-wrap gap-2">
-                  {['Python', 'C++', 'R', 'JavaScript'].map((lang) => (
-                    <span key={lang} className="px-3 py-1 bg-cyan-50 text-cyan-700 rounded-full text-xs font-mono">
-                      {lang}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <p className="font-semibold mb-2">Especialidades</p>
-                <div className="flex flex-wrap gap-2">
-                  {['Machine Learning', 'Otimização', 'Modelagem Matemática', 'Ciência de Dados'].map((skill) => (
-                    <span key={skill} className="px-3 py-1 bg-orange-50 text-orange-700 rounded-full text-xs font-mono">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <p className="font-semibold mb-2">Ferramentas</p>
-                <div className="flex flex-wrap gap-2">
-                  {['Git', 'Power BI', 'Excel', 'Jupyter'].map((tool) => (
-                    <span key={tool} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-mono">
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+            ))}
+          </ScrollReveal>
         </div>
 
-        {/* Highlights */}
-        <div className="bg-gradient-to-r from-cyan-50 to-blue-50 rounded-lg p-8 border border-cyan-200">
-          <h3 className="text-2xl font-bold mb-6 text-gray-900">Destaques</h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="flex gap-4">
-              <div className="flex-shrink-0">
-                <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-cyan-500 text-white">
+        {/* Skills */}
+        <ScrollReveal style={{marginTop:80}}>
+          <div className="fp-label" style={{marginBottom:20}}>Stack técnica</div>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20}}>
+            {skills.map(s => (
+              <div key={s.cat} style={{padding:24,background:'var(--fp-bg-1)',border:'1px solid var(--fp-border)',borderRadius:16}}>
+                <div style={{fontFamily:'var(--fp-font-mono)',fontSize:11,letterSpacing:'.08em',color:'#1e4e8c',marginBottom:14,textTransform:'uppercase'}}>{s.cat}</div>
+                <div style={{display:'flex',flexWrap:'wrap',gap:6}}>
+                  {s.items.map(t => (
+                    <span key={t} style={{fontFamily:'var(--fp-font-mono)',fontSize:12,padding:'5px 10px',borderRadius:6,background:'#fff',border:'1px solid var(--fp-border)',color:'var(--fp-fg-1)'}}>{t}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+};
+
+// Helper Components
+const ScrollReveal = ({ children, distance = 32, style = {}, ...rest }: any) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = React.useState(false);
+  
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    
+    const obs = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), {
+      threshold: 0.1,
+      rootMargin: '0px 0px -10% 0px',
+    });
+    
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  
+  return (
+    <div ref={ref}
+         style={{
+           opacity: visible ? 1 : 0,
+           transform: visible ? 'none' : `translateY(${distance}px)`,
+           transition: 'opacity .7s var(--fp-ease-swift), transform .7s var(--fp-ease-swift)',
+           willChange: 'opacity, transform',
+           ...style,
+         }}
+         {...rest}>
+      {children}
+    </div>
+  );
+};
+
+const SectionHeading = ({ kicker, title, bullet = '#1e4e8c' }: any) => (
+  <div style={{marginBottom:'3rem'}}>
+    {kicker && (
+      <div className="fp-label" style={{display:'flex',alignItems:'center',gap:8,marginBottom:14}}>
+        <span style={{width:8,height:8,borderRadius:999,background:bullet,boxShadow:`0 0 0 3px ${bullet}25`}}/>
+        {kicker}
+      </div>
+    )}
+    <h2 style={{margin:0,fontSize:'clamp(32px,4.5vw,54px)'}}>{title}</h2>
+  </div>
+);
                   ✓
                 </div>
               </div>

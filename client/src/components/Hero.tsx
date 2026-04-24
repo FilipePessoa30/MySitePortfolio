@@ -1,53 +1,150 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { AnimatedGear } from './AnimatedGear';
-import { ArrowRight, Github, Mail, Linkedin } from 'lucide-react';
-
-type HeroTab = 'about' | 'projects' | 'contact';
 
 interface HeroProps {
-  onNavigate?: (tab: HeroTab) => void;
+  onCtaProjects?: () => void;
+  onCtaContact?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
+export const Hero: React.FC<HeroProps> = ({ onCtaProjects, onCtaContact }) => {
+  const [videoReady, setVideoReady] = React.useState(false);
+  const sectionRef = React.useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = React.useState(0);
+
+  React.useEffect(() => {
+    const onScroll = () => {
+      const el = sectionRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      const p = Math.max(0, Math.min(1, -rect.top / vh));
+      setProgress(p);
+    };
+    
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+
+  const fadeOut = Math.max(0, 1 - progress * 1.6);
+  const parallaxUp = (v: number) => `translateY(${-v * progress}px)`;
+  const parallaxDown = (v: number) => `translateY(${ v * progress}px)`;
+  const videoOpacity = videoReady ? Math.max(0, 0.42 - progress * 0.42) : 0;
+  const gridOpacity = Math.max(0, 1 - progress * 1.2);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
-      {/* Background with hero image */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: 'url(https://d2xsxph8kpxj0f.cloudfront.net/310419663030807526/G4fCBy6x4Ymrj4xDrMgH7X/hero-background-CFr2chodQBBTUTWnwornNo.webp)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-        }}
-      >
-        {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent"></div>
+    <section ref={sectionRef}
+             style={{position:'relative',minHeight:'100vh',overflow:'hidden',background:'#fff'}}
+             data-screen-label="Hero">
+      {/* Video backdrop */}
+      <div style={{position:'absolute',inset:0,zIndex:0,overflow:'hidden'}}>
+        <video
+          src="/hero-video.mp4"
+          autoPlay muted loop playsInline
+          onLoadedData={() => setVideoReady(true)}
+          style={{
+            width:'100%',height:'100%',objectFit:'cover',
+            opacity: videoOpacity,
+            transform: `scale(${1 + progress * 0.08})`,
+            transition:'opacity 1.2s var(--fp-ease-swift)',
+            filter:'saturate(0.8) contrast(1.05)'
+          }}
+        />
+        <div style={{position:'absolute',inset:0,background:'linear-gradient(90deg, #ffffff 0%, rgba(255,255,255,0.88) 42%, rgba(255,255,255,0.35) 72%, transparent 100%)'}}/>
+        <div style={{position:'absolute',inset:0,background:'linear-gradient(180deg, rgba(255,255,255,0.6) 0%, transparent 18%, transparent 82%, rgba(255,255,255,0.95) 100%)'}}/>
       </div>
 
-      {/* Animated gears background */}
-      <div className="absolute top-10 right-10 z-1 opacity-20">
-        <AnimatedGear size={150} speed="slow" color="#00d9ff" opacity={0.2} />
+      <div style={{opacity: gridOpacity, transition:'opacity .2s linear'}}>
+        <TechnicalGrid/>
       </div>
-      <div className="absolute bottom-20 left-5 z-1 opacity-15">
-        <AnimatedGear size={120} speed="medium" color="#ff6b35" opacity={0.15} />
+
+      {/* Decorative gears */}
+      <div style={{position:'absolute',top:80,right:'8%',zIndex:1, transform: parallaxUp(60)}}>
+        <AnimatedGear size={160} speed="slow" color="#1e4e8c" opacity={0.14}/>
       </div>
-      <div className="absolute top-1/3 left-1/4 z-1 opacity-10">
-        <AnimatedGear size={200} speed="fast" color="#1a1a1a" opacity={0.1} />
+      <div style={{position:'absolute',bottom:80,left:'4%',zIndex:1, transform: parallaxDown(40)}}>
+        <AnimatedGear size={130} speed="medium" color="#8b1e3f" opacity={0.12}/>
+      </div>
+      <div style={{position:'absolute',top:'40%',left:'38%',zIndex:1, transform: parallaxUp(30)}}>
+        <AnimatedGear size={220} speed="fast" color="#1a1a1a" opacity={0.05}/>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container max-w-4xl mx-auto px-4 py-20">
-        <div className="text-center md:text-left md:max-w-2xl">
-          {/* Greeting */}
-          <div className="mb-6 flex items-center gap-2 md:justify-start justify-center">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
-              <span className="text-white font-bold text-lg">FP</span>
-            </div>
-            <span className="text-sm font-mono text-gray-600">Filipe Pessoa</span>
+      <div style={{
+        position:'relative',zIndex:10,
+        maxWidth:1200,margin:'0 auto',padding:'120px 32px 80px',
+        display:'grid',gridTemplateColumns:'minmax(0,1fr) auto',gap:64,alignItems:'center',
+      }}>
+        {/* Left — copy */}
+        <div style={{opacity: fadeOut, transform: parallaxUp(80)}}>
+          <div className="fp-fade-up d-100" style={{marginBottom:28}}>
+            <StatusPill text="Disponível para colaborações, trabalho e pesquisa" color="#00c853"/>
           </div>
+
+          <h1 className="fp-fade-up d-200" style={{fontSize:'clamp(48px,6.6vw,96px)',lineHeight:0.98,margin:'0 0 28px',letterSpacing:'-.025em',fontWeight:400}}>
+            Engenheiro de{' '}
+            <span className="fp-gradient-cyan-text">Produção</span>,<br/>
+            <span className="fp-gradient-indigo-text">Programador</span>{' '}e{' '}
+            <span className="fp-gradient-orange-text">Pesquisador</span>.
+          </h1>
+
+          <p className="fp-fade-up d-400" style={{fontSize:19,color:'var(--fp-fg-2)',maxWidth:560,lineHeight:1.55,margin:'0 0 36px',fontFamily:'var(--fp-font-body)'}}>
+            Especialista em <strong style={{color:'var(--fp-fg-1)',fontWeight:600}}>Computação Científica</strong>,{' '}
+            <strong style={{color:'var(--fp-fg-1)',fontWeight:600}}>Otimização</strong> e{' '}
+            <strong style={{color:'var(--fp-fg-1)',fontWeight:600}}>Inteligência Artificial</strong>. Doutorando em
+            Ciências Computacionais na UERJ, bolsista CAPES. Baseado no Rio de Janeiro · Brasil.
+          </p>
+
+          <div className="fp-fade-up d-600" style={{display:'flex',gap:14,flexWrap:'wrap',marginBottom:40}}>
+            <PillButton variant="accent" onClick={onCtaProjects} icon={<Icon name="arrow-right" size={16}/>}>Ver Projetos</PillButton>
+            <PillButton variant="ghost" onClick={onCtaContact}>Entrar em contato</PillButton>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Helper Components
+const Icon = ({ name, size = 20, ...rest }: any) => {
+  const paths: Record<string, any> = {
+    'arrow-right':     <><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></>,
+    'arrow-up-right':  <><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></>,
+  };
+  
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...rest}>
+      {paths[name] || null}
+    </svg>
+  );
+};
+
+const StatusPill = ({ text, color = '#1e4e8c' }: any) => (
+  <span className="fp-status-pill">
+    <span className="dot fp-pulse-dot" style={{ background: color, boxShadow: `0 0 0 3px ${color}30` }}/>
+    {text}
+  </span>
+);
+
+const PillButton = ({ variant = 'primary', children, icon, onClick, as = 'button', href }: any) => {
+  const Comp = as === 'a' ? 'a' : 'button';
+  const extra = as === 'a' ? { href, target: '_blank', rel: 'noopener noreferrer' } : { onClick };
+  return (
+    <Comp className={`fp-pill-btn ${variant} ${variant !== 'ghost' ? 'fp-shimmer-btn' : ''}`} {...extra}>
+      {children}
+      {icon && <span className="arrow" style={{display:'inline-flex',transition:'transform .2s'}}>{icon}</span>}
+    </Comp>
+  );
+};
+
+const TechnicalGrid = ({ style = {} }: any) => (
+  <div className="fp-technical-grid" style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:0,...style}}/>
+);
 
           {/* Main heading */}
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900 leading-tight">

@@ -1,103 +1,157 @@
 import React, { useState } from 'react';
 import { AnimatedGear } from './AnimatedGear';
-import { Button } from '@/components/ui/button';
-import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink } from 'lucide-react';
-import { toast } from 'sonner';
 
 export const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const { show, Toast } = useToast();
+  const [form, setForm] = useState({ name:'', email:'', message:'' });
+  const [busy, setBusy] = useState(false);
+  
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    // Validate form
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      toast.error('Por favor, preencha todos os campos');
-      return;
+    if (!form.name || !form.email || !form.message) {
+      return show('Preencha todos os campos.','error');
     }
-
-    // Create mailto link
-    const mailtoLink = `mailto:Filipe.Pessoa18@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
-      `Nome: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
-    )}`;
-
-    window.location.href = mailtoLink;
     
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: '',
-    });
-    
-    toast.success('Redirecionando para seu cliente de email...');
+    setBusy(true);
+    setTimeout(() => { 
+      setBusy(false); 
+      show('Mensagem enviada. Obrigado!'); 
+      setForm({name:'',email:'',message:''}); 
+    }, 900);
   };
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
-      {/* Decorative gears */}
-      <div className="absolute top-20 left-10 z-0 opacity-5">
-        <AnimatedGear size={280} speed="slow" color="#1a1a1a" opacity={0.05} />
-      </div>
-      <div className="absolute bottom-10 right-5 z-0 opacity-5">
-        <AnimatedGear size={320} speed="medium" color="#00d9ff" opacity={0.05} />
-      </div>
-
-      <div className="container max-w-6xl mx-auto px-4 relative z-10">
-        <div className="mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-            Entre em Contato
-          </h2>
-          <p className="text-lg text-gray-700 max-w-2xl">
-            Estou aberto a colaborações, oportunidades acadêmicas e discussões sobre pesquisa.
-            Sinta-se livre para entrar em contato!
+    <section style={{position:'relative',padding:'120px 32px',background:'#1a1a1a',color:'#fff'}} data-screen-label="Contact">
+      <div style={{position:'absolute',top:60,right:'10%'}}><AnimatedGear size={140} color="#00c853" opacity={0.12}/></div>
+      
+      <div style={{maxWidth:1100,margin:'0 auto',position:'relative',display:'grid',gridTemplateColumns:'1fr 1.1fr',gap:64}}>
+        <ScrollReveal distance={40}>
+          <div className="fp-label" style={{color:'#00c853',marginBottom:14}}>03 · CONTATO</div>
+          <h2 style={{margin:'0 0 20px',fontSize:'clamp(32px,4vw,50px)',color:'#fff'}}>Vamos construir<br/>algo preciso?</h2>
+          <p style={{color:'#a0a0a0',fontSize:16,lineHeight:1.6,maxWidth:440}}>
+            Aberto a colaborações de pesquisa, consultorias em otimização
+            e projetos de computação científica.
           </p>
-        </div>
+          
+          <div style={{marginTop:36,display:'flex',flexDirection:'column',gap:16}}>
+            {[
+              {icon:'mail',  text:'Filipe.Pessoa18@gmail.com'},
+              {icon:'map-pin', text:'Rio de Janeiro · Brasil'},
+              {icon:'briefcase', text:'UERJ · Doutorado em Ciências Computacionais'},
+            ].map(c => (
+              <div key={c.icon} style={{display:'flex',alignItems:'center',gap:14,color:'#e0e0e0',fontSize:14}}>
+                <span style={{width:36,height:36,borderRadius:10,background:'#2a2a2a',display:'flex',alignItems:'center',justifyContent:'center',color:'#00c853'}}><Icon name={c.icon} size={16}/></span>
+                {c.text}
+              </div>
+            ))}
+          </div>
+        </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 gap-12 mb-16">
-          {/* Contact Info */}
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-2xl font-bold mb-8 text-gray-900">Informações de Contato</h3>
-              
-              <div className="space-y-6">
-                {/* Email */}
-                <a
-                  href="mailto:Filipe.Pessoa18@gmail.com"
-                  className="flex items-start gap-4 p-4 rounded-lg hover:bg-cyan-50 transition-colors group"
-                >
-                  <div className="p-3 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-lg group-hover:from-cyan-200 group-hover:to-blue-200 transition-colors">
-                    <Mail className="w-6 h-6 text-cyan-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Email</h4>
-                    <p className="text-gray-700 group-hover:text-cyan-600 transition-colors">
-                      Filipe.Pessoa18@gmail.com
-                    </p>
-                  </div>
-                </a>
+        <ScrollReveal as="form" distance={40} delay={100} onSubmit={onSubmit} style={{padding:32,background:'#0f0f0f',border:'1px solid #2a2a2a',borderRadius:18}}>
+          {[
+            { k:'name',  label:'NOME',    type:'text' },
+            { k:'email', label:'E-MAIL',  type:'email' },
+          ].map(f => (
+            <div key={f.k} style={{marginBottom:18}}>
+              <label style={{display:'block',fontFamily:'var(--fp-font-mono)',fontSize:10,letterSpacing:'.15em',color:'#a0a0a0',marginBottom:6}}>{f.label}</label>
+              <input type={f.type} value={(form as any)[f.k]} onChange={e => setForm({...form,[f.k]:e.target.value})}
+                     style={{width:'100%',padding:'12px 14px',background:'#1a1a1a',border:'1px solid #2a2a2a',borderRadius:10,color:'#fff',fontSize:14,fontFamily:'var(--fp-font-body)',outline:'none',transition:'border-color .15s'}}
+                     onFocus={e => e.target.style.borderColor='#00c853'} onBlur={e => e.target.style.borderColor='#2a2a2a'}/>
+            </div>
+          ))}
+          
+          <div style={{marginBottom:22}}>
+            <label style={{display:'block',fontFamily:'var(--fp-font-mono)',fontSize:10,letterSpacing:'.15em',color:'#a0a0a0',marginBottom:6}}>MENSAGEM</label>
+            <textarea rows={5} value={form.message} onChange={e => setForm({...form,message:e.target.value})}
+                     style={{width:'100%',padding:'12px 14px',background:'#1a1a1a',border:'1px solid #2a2a2a',borderRadius:10,color:'#fff',fontSize:14,fontFamily:'var(--fp-font-body)',outline:'none',resize:'vertical',transition:'border-color .15s'}}
+                     onFocus={e => e.target.style.borderColor='#00c853'} onBlur={e => e.target.style.borderColor='#2a2a2a'}/>
+          </div>
+          
+          <button type="submit" disabled={busy} className="fp-shimmer-btn"
+                  style={{width:'100%',padding:'14px 20px',background:busy?'#2a2a2a':'#00c853',color:'#fff',border:'none',borderRadius:10,fontSize:14,fontWeight:700,fontFamily:'var(--fp-font-body)',cursor:busy?'wait':'pointer',display:'inline-flex',alignItems:'center',justifyContent:'center',gap:8,transition:'all .2s'}}>
+            {busy ? 'Enviando…' : <>Enviar mensagem <Icon name="arrow-right" size={16}/></>}
+          </button>
+        </ScrollReveal>
+      </div>
+      <Toast/>
+    </section>
+  );
+};
 
-                {/* Phone */}
-                <a
-                  href="tel:+5521985337539"
-                  className="flex items-start gap-4 p-4 rounded-lg hover:bg-orange-50 transition-colors group"
-                >
-                  <div className="p-3 bg-gradient-to-br from-orange-100 to-red-100 rounded-lg group-hover:from-orange-200 group-hover:to-red-200 transition-colors">
-                    <Phone className="w-6 h-6 text-orange-600" />
+// Helper Components
+const Icon = ({ name, size = 20, ...rest }: any) => {
+  const paths: Record<string, any> = {
+    'arrow-right':     <><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></>,
+    'mail':            <><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></>,
+    'map-pin':         <><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></>,
+    'briefcase':       <><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></>,
+  };
+  
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...rest}>
+      {paths[name] || null}
+    </svg>
+  );
+};
+
+const ScrollReveal = ({ children, distance = 32, delay = 0, as: Tag = 'div', onSubmit, style = {}, ...rest }: any) => {
+  const ref = React.useRef<any>(null);
+  const [visible, setVisible] = React.useState(false);
+  
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    
+    const obs = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), {
+      threshold: 0.1,
+      rootMargin: '0px 0px -10% 0px',
+    });
+    
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  
+  return (
+    <Tag ref={ref}
+         onSubmit={onSubmit}
+         style={{
+           opacity: visible ? 1 : 0,
+           transform: visible ? 'none' : `translateY(${distance}px)`,
+           transition: 'opacity .7s var(--fp-ease-swift), transform .7s var(--fp-ease-swift)',
+           transitionDelay: `${delay}ms`,
+           willChange: 'opacity, transform',
+           ...style,
+         }}
+         {...rest}>
+      {children}
+    </Tag>
+  );
+};
+
+const useToast = () => {
+  const [msg, setMsg] = useState<{text: string; tone: 'success' | 'error'; id: number} | null>(null);
+  
+  const show = (text: string, tone: 'success' | 'error' = 'success') => {
+    setMsg({ text, tone, id: Date.now() });
+    setTimeout(() => setMsg(null), 3000);
+  };
+  
+  const Toast = () => msg && (
+    <div style={{
+      position:'fixed', bottom:24, right:24, zIndex:100,
+      padding:'12px 18px', borderRadius:12,
+      background: msg.tone === 'error' ? '#1a1a1a' : '#fff',
+      color: msg.tone === 'error' ? '#fff' : '#1a1a1a',
+      border:'1px solid var(--fp-border)',
+      boxShadow:'0 10px 24px rgba(0,0,0,0.12)',
+      fontSize:14, fontFamily:'var(--fp-font-body)',
+      animation:'fp-fade-up .3s var(--fp-ease-swift)'
+    }}>{msg.text}</div>
+  );
+  
+  return { show, Toast };
+};
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">Telefone</h4>

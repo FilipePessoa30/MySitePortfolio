@@ -1,103 +1,117 @@
 import React from 'react';
 import { AnimatedGear } from './AnimatedGear';
-import { ExternalLink, Github, Code2 } from 'lucide-react';
 
-interface Project {
+interface ProjectItem {
+  tag: string;
   title: string;
-  description: string;
-  tags: string[];
-  link: string;
-  language: string;
-  featured?: boolean;
+  desc: string;
+  tech: string[];
+  color: string;
+  year: string;
 }
 
-const projects: Project[] = [
-  {
-    title: 'MulticriteriaMicrogrid',
-    description: 'Otimização multiobjetivo de microgrids com recursos renováveis. Aplicação de algoritmos evolucionários para planejamento energético.',
-    tags: ['Otimização', 'Python', 'Energia'],
-    link: 'https://github.com/FilipePessoa30/MulticriteriaMicrogrid',
-    language: 'Python',
-    featured: true,
-  },
-  {
-    title: 'Fuzzy_PLN',
-    description: 'Implementação de lógica fuzzy aplicada a processamento de linguagem natural. Análise de sentimentos e classificação de texto.',
-    tags: ['Fuzzy', 'NLP', 'Machine Learning'],
-    link: 'https://github.com/FilipePessoa30/Fuzzy_PLN',
-    language: 'Jupyter Notebook',
-    featured: true,
-  },
-  {
-    title: 'Segmentacao_imagem_fuzzy',
-    description: 'Segmentação de imagens utilizando técnicas de lógica fuzzy. Aplicação em processamento de imagens médicas.',
-    tags: ['Fuzzy', 'Visão Computacional', 'Python'],
-    link: 'https://github.com/FilipePessoa30/Segmentacao_imagem_fuzzy',
-    language: 'Jupyter Notebook',
-    featured: true,
-  },
-  {
-    title: 'Computacao-Cientifica',
-    description: 'Estudos e implementações em computação científica. Métodos numéricos, resolução de equações diferenciais e simulações.',
-    tags: ['Computação Científica', 'Python', 'Métodos Numéricos'],
-    link: 'https://github.com/FilipePessoa30/Computa--o-Cientifica',
-    language: 'Python',
-  },
-  {
-    title: 'Montreal-Tour-Planning',
-    description: 'Problema de roteamento e planejamento de rotas em Montreal. Aplicação de algoritmos de otimização combinatória.',
-    tags: ['Otimização', 'Roteamento', 'Python'],
-    link: 'https://github.com/FilipePessoa30/Montreal-Tour-Planning',
-    language: 'Python',
-  },
-  {
-    title: 'Machine-Learning-MyStudy',
-    description: 'Estudos práticos em machine learning. Implementação de algoritmos clássicos e análise de datasets.',
-    tags: ['Machine Learning', 'Python', 'Análise de Dados'],
-    link: 'https://github.com/FilipePessoa30/Machine-Learning-MyStudy',
-    language: 'Jupyter Notebook',
-  },
-  {
-    title: 'otimizacao',
-    description: 'Estudos aprofundados em otimização linear, não-linear e combinatória. Formulações e resolução de problemas.',
-    tags: ['Otimização', 'Pesquisa Operacional', 'Python'],
-    link: 'https://github.com/FilipePessoa30/otimizacao',
-    language: 'Jupyter Notebook',
-  },
-  {
-    title: 'DataScience_Python',
-    description: 'Projetos em ciência de dados com Python. Análise exploratória, visualização e modelagem preditiva.',
-    tags: ['Ciência de Dados', 'Python', 'Análise'],
-    link: 'https://github.com/FilipePessoa30/DataScience_Python',
-    language: 'Jupyter Notebook',
-  },
+const projects: ProjectItem[] = [
+  { tag: 'DOUTORADO', title: 'Otimização de Sistemas Energéticos Híbridos', desc: 'Modelos MILP combinados com redes neurais para operação ótima de microgrids solares-eólicos.', tech: ['Python','Pyomo','Gurobi','PyTorch'], color: '#8b1e3f', year: '2025' },
+  { tag: 'PESQUISA',  title: 'Scheduling Estocástico em Manufatura',       desc: 'Algoritmos híbridos metaheurística + ML para job-shop scheduling com incerteza de demanda.',  tech: ['C++','OR-Tools','scikit-learn'], color: '#1e4e8c', year: '2024' },
+  { tag: 'MESTRADO',  title: 'Previsão de Demanda em Supply Chains',       desc: 'Ensemble de modelos ARIMA, LSTM e XGBoost para cadeias industriais brasileiras.',              tech: ['R','Python','TensorFlow'],    color: '#00c853', year: '2023' },
+  { tag: 'ACADÊMICO', title: 'Simulação Monte Carlo · Confiabilidade',     desc: 'Análise de confiabilidade de sistemas em paralelo-série com dependência estocástica.',       tech: ['Python','NumPy','SciPy'],     color: '#1e4e8c', year: '2023' },
 ];
 
-const languageColors: Record<string, string> = {
-  'Python': 'bg-blue-100 text-blue-700',
-  'C++': 'bg-red-100 text-red-700',
-  'Java': 'bg-orange-100 text-orange-700',
-  'JavaScript': 'bg-yellow-100 text-yellow-700',
-  'Jupyter Notebook': 'bg-purple-100 text-purple-700',
-  'HTML': 'bg-red-100 text-red-700',
-  'Rust': 'bg-orange-100 text-orange-700',
+export const Projects: React.FC = () => {
+  return (
+    <section style={{position:'relative',padding:'120px 32px',background:'var(--fp-bg-2)'}} data-screen-label="Projects">
+      <TechnicalGrid style={{opacity:.4}}/>
+      <div style={{maxWidth:1200,margin:'0 auto',position:'relative'}}>
+        <ScrollReveal>
+          <SectionHeading kicker="02 · PROJETOS & PESQUISA" title="Onde matemática encontra código." bullet="#8b1e3f"/>
+        </ScrollReveal>
+        
+        <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:22}}>
+          {projects.map((p,i) => (
+            <ScrollReveal key={i} delay={i*80} as="article" className="fp-card-hover" style={{position:'relative',padding:28,background:'#fff',border:'1px solid var(--fp-border)',borderRadius:18,overflow:'hidden'}}>
+              <div style={{position:'absolute',top:0,left:0,right:0,height:3,background:p.color}}/>
+              <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16}}>
+                <span style={{fontFamily:'var(--fp-font-mono)',fontSize:10,letterSpacing:'.15em',padding:'4px 10px',borderRadius:4,background:`${p.color}18`,color:p.color}}>{p.tag}</span>
+                <span style={{fontFamily:'var(--fp-font-mono)',fontSize:11,color:'var(--fp-fg-3)'}}>{p.year}</span>
+              </div>
+              <h3 style={{fontSize:22,margin:'0 0 10px',lineHeight:1.2}}>{p.title}</h3>
+              <p style={{fontSize:14,color:'var(--fp-fg-2)',lineHeight:1.55,margin:'0 0 18px'}}>{p.desc}</p>
+              <div style={{display:'flex',flexWrap:'wrap',gap:6,marginBottom:18}}>
+                {p.tech.map(t => <span key={t} style={{fontFamily:'var(--fp-font-mono)',fontSize:11,padding:'3px 8px',borderRadius:4,background:'var(--fp-bg-2)',color:'var(--fp-fg-1)'}}>{t}</span>)}
+              </div>
+              <a href="#" onClick={e => e.preventDefault()} style={{display:'inline-flex',alignItems:'center',gap:6,fontSize:13,fontFamily:'var(--fp-font-mono)',color:p.color,textDecoration:'none',letterSpacing:'.03em'}}>
+                VER DETALHES <Icon name="arrow-up-right" size={14}/>
+              </a>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 };
 
-export const Projects: React.FC = () => {
-  const featuredProjects = projects.filter(p => p.featured);
-  const otherProjects = projects.filter(p => !p.featured);
-
+// Helper Components
+const Icon = ({ name, size = 20, ...rest }: any) => {
+  const paths: Record<string, any> = {
+    'arrow-up-right':  <><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></>,
+  };
+  
   return (
-    <section id="projects" className="py-20 bg-white relative overflow-hidden">
-      {/* Decorative gears */}
-      <div className="absolute top-10 right-5 z-0 opacity-5">
-        <AnimatedGear size={250} speed="medium" color="#00d9ff" opacity={0.05} />
-      </div>
-      <div className="absolute bottom-20 left-10 z-0 opacity-5">
-        <AnimatedGear size={300} speed="slow" color="#ff6b35" opacity={0.05} />
-      </div>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...rest}>
+      {paths[name] || null}
+    </svg>
+  );
+};
 
-      <div className="container max-w-6xl mx-auto px-4 relative z-10">
+const ScrollReveal = ({ children, distance = 32, delay = 0, as: Tag = 'div', style = {}, ...rest }: any) => {
+  const ref = React.useRef<any>(null);
+  const [visible, setVisible] = React.useState(false);
+  
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    
+    const obs = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), {
+      threshold: 0.1,
+      rootMargin: '0px 0px -10% 0px',
+    });
+    
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  
+  return (
+    <Tag ref={ref}
+         style={{
+           opacity: visible ? 1 : 0,
+           transform: visible ? 'none' : `translateY(${distance}px)`,
+           transition: 'opacity .7s var(--fp-ease-swift), transform .7s var(--fp-ease-swift)',
+           transitionDelay: `${delay}ms`,
+           willChange: 'opacity, transform',
+           ...style,
+         }}
+         {...rest}>
+      {children}
+    </Tag>
+  );
+};
+
+const SectionHeading = ({ kicker, title, bullet = '#1e4e8c' }: any) => (
+  <div style={{marginBottom:'3rem'}}>
+    {kicker && (
+      <div className="fp-label" style={{display:'flex',alignItems:'center',gap:8,marginBottom:14}}>
+        <span style={{width:8,height:8,borderRadius:999,background:bullet,boxShadow:`0 0 0 3px ${bullet}25`}}/>
+        {kicker}
+      </div>
+    )}
+    <h2 style={{margin:0,fontSize:'clamp(32px,4.5vw,54px)'}}>{title}</h2>
+  </div>
+);
+
+const TechnicalGrid = ({ style = {} }: any) => (
+  <div className="fp-technical-grid" style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:0,...style}}/>
+);
         <div className="mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
             Projetos & Pesquisa
