@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Filipe Pessoa · Portfolio UI Kit</title>
+<link rel="stylesheet" href="../../colors_and_type.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fp-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --fp-font-display: 'Instrument Serif', Georgia, serif;
+    --fp-font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  }
+  html, body { margin:0; padding:0; background:#fff; font-family: var(--fp-font-body); color: var(--fp-fg-1); scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: var(--fp-font-display); font-weight: 400; letter-spacing: -.01em; }
+
+  /* --- NAV --- */
+  .fp-nav {
+    position: fixed; top:0; left:0; right:0; z-index:50;
+    padding: 16px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--fp-border);
+    transition: background .2s;
+  }
+  .fp-nav__brand { display:flex; align-items:center; gap:10px; }
+  .fp-nav__brand img { width:32px; height:32px; }
+  .fp-nav__brand-text { font-family: var(--fp-font-mono); font-size:13px; font-weight:700; letter-spacing:.02em; }
+  .fp-nav__links { display:flex; gap:8px; }
+  .fp-nav__link {
+    padding: 8px 16px; border-radius: 8px;
+    font-family: var(--fp-font-mono); font-size: 12px; letter-spacing:.05em;
+    color: var(--fp-fg-2); cursor:pointer; border:none; background:transparent;
+    transition: all .15s var(--fp-ease-swift);
+  }
+  .fp-nav__link:hover { color: var(--fp-fg-1); background: var(--fp-bg-2); }
+  .fp-nav__link.active { background: #1a1a1a; color: #fff; }
+
+  /* --- PILL BUTTON --- */
+  .fp-pill-btn {
+    display:inline-flex; align-items:center; gap:10px;
+    padding: 12px 22px; border-radius:999px;
+    font-family: var(--fp-font-body); font-size:14px; font-weight:600;
+    border:1px solid transparent; cursor:pointer;
+    transition: all .2s var(--fp-ease-swift);
+  }
+  .fp-pill-btn.accent { background: #1e4e8c; color:#fff; box-shadow: 0 0 20px rgba(30,78,140,.35); }
+  .fp-pill-btn.accent:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(30,78,140,.55); background: #163c6c; }
+  .fp-pill-btn.primary { background:#1a1a1a; color:#fff; }
+  .fp-pill-btn.primary:hover { background:#000; transform: translateY(-2px); }
+  .fp-pill-btn.ghost { background:transparent; color:var(--fp-fg-1); border-color: var(--fp-border); }
+  .fp-pill-btn.ghost:hover { border-color:#1a1a1a; background:#1a1a1a; color:#fff; }
+  .fp-pill-btn:hover .arrow { transform: translateX(3px); }
+
+  /* --- STATUS PILL --- */
+  .fp-status-pill {
+    display:inline-flex; align-items:center; gap:10px;
+    padding: 6px 14px; border-radius:999px;
+    font-family: var(--fp-font-mono); font-size:11px; letter-spacing:.05em;
+    background: #fff; color: var(--fp-fg-2);
+    border: 1px solid var(--fp-border);
+  }
+  .fp-status-pill .dot { width:8px; height:8px; border-radius:999px; display:inline-block; }
+
+  /* --- CARD HOVER --- */
+  .fp-card-hover { transition: transform .25s var(--fp-ease-snap), box-shadow .25s, border-color .25s; }
+  .fp-card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.18); border-color: #1a1a1a; }
+
+  /* --- Animations --- */
+  @keyframes fp-fade-up { from { opacity:0; transform: translateY(14px); } to { opacity:1; transform:none; } }
+  @keyframes fp-fade-in { from { opacity:0; } to { opacity:1; } }
+  @keyframes fp-pulse   { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(.85); } }
+  @keyframes fp-breathe { 0%,100% { opacity:.6; transform:scale(1); } 50% { opacity:1; transform:scale(1.08); } }
+  .fp-fade-up { opacity:0; animation: fp-fade-up .8s var(--fp-ease-swift) forwards; }
+  .fp-fade-in { opacity:0; animation: fp-fade-in .8s forwards; }
+  .fp-pulse-dot { animation: fp-pulse 2s ease-in-out infinite; }
+  .fp-breathe { animation: fp-breathe 4s ease-in-out infinite; }
+  .d-100{animation-delay:.1s}.d-200{animation-delay:.2s}.d-300{animation-delay:.3s}
+  .d-400{animation-delay:.4s}.d-500{animation-delay:.5s}.d-600{animation-delay:.6s}
+  .d-700{animation-delay:.7s}.d-800{animation-delay:.8s}.d-900{animation-delay:.9s}
+
+  /* --- Gears --- */
+  @keyframes fp-spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+  .fp-gear-slow   { animation: fp-spin 60s linear infinite; }
+  .fp-gear-medium { animation: fp-spin 40s linear infinite; }
+  .fp-gear-fast   { animation: fp-spin 20s linear infinite; }
+
+  /* --- Shimmer on buttons --- */
+  .fp-shimmer-btn { position: relative; overflow:hidden; }
+  .fp-shimmer-btn::after {
+    content: ""; position: absolute; top:0; left:-100%; width:100%; height:100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+    transition: left .6s;
+  }
+  .fp-shimmer-btn:hover::after { left: 100%; }
+
+  /* --- Role-led gradient text (darker stops for white-background legibility) --- */
+  .fp-gradient-cyan-text   { background: linear-gradient(135deg, #163c6c, #0d2648); -webkit-background-clip: text; background-clip: text; color: transparent; font-style: italic; }
+  .fp-gradient-indigo-text { background: linear-gradient(135deg, #008f3a, #064b22); -webkit-background-clip: text; background-clip: text; color: transparent; font-style: italic; }
+  .fp-gradient-orange-text { background: linear-gradient(135deg, #6a152f, #3e0c1b); -webkit-background-clip: text; background-clip: text; color: transparent; font-style: italic; }
+
+  /* --- Technical grid backdrop --- */
+  .fp-technical-grid {
+    background-image:
+      linear-gradient(rgba(26,26,26,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,26,26,.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(circle at center, #000 0%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at center, #000 0%, transparent 80%);
+  }
+
+  /* --- Social icons --- */
+  .fp-social:hover { text-decoration: none; }
+
+  /* --- Footer --- */
+  .fp-footer {
+    padding: 40px 32px; background:#0a0a0a; color:#a0a0a0;
+    display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+    font-family: var(--fp-font-mono); font-size: 11px; letter-spacing:.05em;
+  }
+  .fp-footer a { color: #4d8fd9; text-decoration:none; }
+  .fp-footer a:hover { text-decoration: underline; color: #7fb0e8; }
+
+  /* --- Circular avatar for navbar --- */
+  .fp-nav__avatar {
+    width: 36px; height: 36px;
+    border-radius: 999px;
+    overflow: hidden;
+    border: 2px solid #1e4e8c;
+    padding: 1px;
+    background: linear-gradient(135deg, #1e4e8c, #0d2648);
+  }
+  .fp-nav__avatar img {
+    width: 100%; height: 100%;
+    border-radius: 999px;
+    object-fit: cover;
+    object-position: 42% 16%;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="./components.jsx"></script>
+<script type="text/babel" src="./Hero.jsx"></script>
+<script type="text/babel" src="./About.jsx"></script>
+<script type="text/babel" src="./Projects.jsx"></script>
+<script type="text/babel" src="./Contact.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+function Nav({ activeSection, onJump }) {
+  const items = [
+    { id: 'hero',     label: 'INÍCIO' },
+    { id: 'about',    label: 'SOBRE' },
+    { id: 'projects', label: 'PROJETOS' },
+    { id: 'contact',  label: 'CONTATO' },
+  ];
+  return (
+    <nav className="fp-nav">
+      <a href="#hero" className="fp-nav__brand" onClick={e => { e.preventDefault(); onJump('hero'); }}>
+        <span className="fp-nav__avatar"><img src="../../assets/filipe-portrait.jpg" alt="Filipe Pessoa"/></span>
+        <span className="fp-nav__brand-text">FILIPE · PESSOA</span>
+      </a>
+      <div className="fp-nav__links">
+        {items.map(it => (
+          <button key={it.id}
+                  className={`fp-nav__link ${activeSection === it.id ? 'active' : ''}`}
+                  onClick={() => onJump(it.id)}>
+            {it.label}
+          </button>
+        ))}
+      </div>
+    </nav>
+  );
+}
+
+function App() {
+  const [active, setActive] = useState('hero');
+  const refs = {
+    hero: useRef(null), about: useRef(null),
+    projects: useRef(null), contact: useRef(null),
+  };
+  const jump = (id) => {
+    const el = refs[id]?.current;
+    if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: 'smooth' });
+  };
+  useEffect(() => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) setActive(e.target.dataset.section); });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    Object.entries(refs).forEach(([k, r]) => {
+      if (r.current) { r.current.dataset.section = k; obs.observe(r.current); }
+    });
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <>
+      <Nav activeSection={active} onJump={jump}/>
+      <div ref={refs.hero}><Hero onCtaProjects={() => jump('projects')} onCtaContact={() => jump('contact')}/></div>
+      <div ref={refs.about}><About/></div>
+      <div ref={refs.projects}><Projects/></div>
+      <div ref={refs.contact}><Contact/></div>
+      <footer className="fp-footer">
+        <span>© 2025 · FILIPE PESSOA SOUSA</span>
+        <span>BUILT WITH <span style={{color:'#00c853'}}>PRECISION</span> · <a href="https://github.com/FilipePessoa30" target="_blank" rel="noopener noreferrer">GITHUB</a></span>
+      </footer>
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+setTimeout(() => root.render(<App/>), 20);
+</script>
+</body>
+</html>

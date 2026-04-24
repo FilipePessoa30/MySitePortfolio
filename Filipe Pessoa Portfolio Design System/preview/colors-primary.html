@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  body { margin:0; padding:22px; background:#fff; font-family: var(--fp-font-body); }
+
+  .stack { display:flex; flex-direction:column; gap:14px; }
+  .row { display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; }
+  .neutrals { display:grid; grid-template-columns: repeat(2, 1fr); gap:12px; }
+
+  .role {
+    position:relative; overflow:hidden;
+    border-radius: var(--fp-radius-xl);
+    color:#fff;
+    padding: 14px 16px;
+    min-height: 128px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 6px 16px -8px rgba(0,0,0,.12);
+  }
+  .role .tag {
+    font-family: var(--fp-font-mono); font-size:10px; letter-spacing:.16em;
+    text-transform:uppercase; opacity:.8;
+  }
+  .role .name {
+    font-family: var(--fp-font-mono); font-size:16px; font-weight:700;
+    letter-spacing:-.01em; margin-top:2px;
+  }
+  .role .role-label {
+    font-family: var(--fp-font-body); font-size:11px; opacity:.85; margin-top:1px;
+  }
+  .role .hex {
+    font-family: var(--fp-font-mono); font-size:11px; opacity:.82;
+  }
+  .role .motif {
+    position:absolute; right:-6px; top:-6px; width:56px; height:56px; opacity:.22;
+  }
+
+  .role.engineering {
+    background: linear-gradient(135deg, #1e4e8c 0%, #0d2648 100%);
+  }
+  .role.programming {
+    background: linear-gradient(135deg, #00c853 0%, #008f3a 100%);
+  }
+  .role.research {
+    background: linear-gradient(135deg, #8b1e3f 0%, #3e0c1b 100%);
+  }
+
+  .swatch {
+    border-radius: var(--fp-radius-lg);
+    overflow:hidden; border:1px solid var(--fp-border);
+    background:#fff;
+  }
+  .swatch .chip { height:44px; }
+  .swatch .meta { padding:8px 11px; }
+  .swatch .n { font-family: var(--fp-font-mono); font-size:11px; font-weight:700; letter-spacing:.02em; color: var(--fp-fg-1); text-transform: uppercase; }
+  .swatch .h { font-family: var(--fp-font-mono); font-size:10px; color: var(--fp-fg-3); margin-top:2px; }
+</style></head>
+<body>
+
+<div class="stack">
+
+  <!-- Role-led primaries -->
+  <div class="row">
+    <div class="role engineering">
+      <svg class="motif" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4">
+        <rect x="3" y="3" width="18" height="18" rx="1"/>
+        <path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>
+      </svg>
+      <div>
+        <div class="tag">ENGENHARIA DE PRODUÇÃO</div>
+        <div class="name">Blueprint Blue</div>
+        <div class="role-label">Planta técnica · aço · precisão</div>
+      </div>
+      <div class="hex">#1E4E8C</div>
+    </div>
+
+    <div class="role programming">
+      <svg class="motif" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="16 18 22 12 16 6"/>
+        <polyline points="8 6 2 12 8 18"/>
+      </svg>
+      <div>
+        <div class="tag">PROGRAMAÇÃO</div>
+        <div class="name">Terminal Green</div>
+        <div class="role-label">Editor · CRT · sintaxe viva</div>
+      </div>
+      <div class="hex">#00C853</div>
+    </div>
+
+    <div class="role research">
+      <svg class="motif" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 10v6"/>
+        <path d="M2 10l10-5 10 5-10 5z"/>
+        <path d="M6 12v5c0 1.66 3 3 6 3s6-1.34 6-3v-5"/>
+      </svg>
+      <div>
+        <div class="tag">PESQUISA</div>
+        <div class="name">Academic Burgundy</div>
+        <div class="role-label">Toga doutoral · periódico</div>
+      </div>
+      <div class="hex">#8B1E3F</div>
+    </div>
+  </div>
+
+  <!-- Neutral base -->
+  <div class="neutrals">
+    <div class="swatch">
+      <div class="chip" style="background:#1a1a1a"></div>
+      <div class="meta">
+        <div class="n">Charcoal</div>
+        <div class="h">#1A1A1A · foreground · dark surface</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background:#ffffff; border-bottom:1px solid var(--fp-border)"></div>
+      <div class="meta">
+        <div class="n">White</div>
+        <div class="h">#FFFFFF · canvas · light surface</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body></html>

@@ -1,0 +1,337 @@
+/* ============================================================
+   Filipe Pessoa Portfolio — Design Tokens
+   Industrial Precision theme: charcoal + white, electric cyan
+   accent, industrial orange secondary. Space Mono for display,
+   IBM Plex Sans for body.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* ---------- Brand colors (Triple Craft — três profissões) ----------
+     Cada cor representa uma das três identidades profissionais:
+       · Engenheiro de Produção → Blueprint Blue (planta técnica, aço)
+       · Programador            → Terminal Green (CRT, editor, sintaxe)
+       · Pesquisador            → Academic Burgundy (toga doutoral, periódico)
+     Charcoal e White formam a base neutra.
+  ------------------------------------------------------------------- */
+  --fp-charcoal:      #1a1a1a;  /* primary foreground / dark surface */
+  --fp-white:         #ffffff;  /* primary background */
+
+  --fp-blueprint:     #1e4e8c;  /* Engenharia · Blueprint Blue (primário) */
+  --fp-terminal:      #00c853;  /* Programação · Terminal Green           */
+  --fp-burgundy:      #8b1e3f;  /* Pesquisa   · Academic Burgundy         */
+
+  /* Tints / shades for each role */
+  --fp-blueprint-50:  #eaf1f9;
+  --fp-blueprint-100: #c7d9ee;
+  --fp-blueprint-700: #163c6c;
+  --fp-blueprint-900: #0d2648;
+
+  --fp-terminal-50:   #e6f8ec;
+  --fp-terminal-100:  #b9ecc9;
+  --fp-terminal-700:  #008f3a;
+  --fp-terminal-900:  #064b22;
+
+  --fp-burgundy-50:   #f7e9ee;
+  --fp-burgundy-100:  #eac4d0;
+  --fp-burgundy-700:  #6a152f;
+  --fp-burgundy-900:  #3e0c1b;
+
+  /* Legacy aliases (so existing code keeps working during rollout) */
+  --fp-cyan:          var(--fp-blueprint);   /* "primary accent"   */
+  --fp-orange:        var(--fp-burgundy);    /* "secondary / destructive" */
+
+  /* ---------- Neutral ramp ---------- */
+  --fp-gray-50:       #fafafa;
+  --fp-gray-100:      #f5f5f5;
+  --fp-gray-200:      #e0e0e0;
+  --fp-gray-300:      #cccccc;
+  --fp-gray-400:      #a0a0a0;
+  --fp-gray-500:      #666666;
+  --fp-gray-600:      #4a4a4a;
+  --fp-gray-700:      #2a2a2a;
+  --fp-gray-800:      #1a1a1a;
+  --fp-gray-900:      #0a0a0a;
+
+  /* ---------- Gradient partners (used in hero H1, CTA buttons) ---------- */
+  --fp-blueprint-500: #1e4e8c;
+  --fp-blueprint-600: #163c6c;
+  --fp-terminal-500:  #00c853;
+  --fp-terminal-600:  #008f3a;
+  --fp-burgundy-500:  #8b1e3f;
+  --fp-burgundy-600:  #6a152f;
+  /* Back-compat gradient tokens */
+  --fp-cyan-500:      var(--fp-blueprint-500);
+  --fp-blue-600:      var(--fp-blueprint-600);
+  --fp-indigo-500:    var(--fp-blueprint-500);
+  --fp-violet-600:    var(--fp-burgundy);
+  --fp-orange-500:    var(--fp-burgundy);
+  --fp-red-600:       var(--fp-burgundy-600);
+
+  /* ---------- Semantic surface / text (light mode) ---------- */
+  --fp-background:    var(--fp-white);
+  --fp-foreground:    var(--fp-charcoal);
+  --fp-card:          var(--fp-gray-100);
+  --fp-muted:         var(--fp-gray-200);
+  --fp-muted-fg:      var(--fp-gray-500);
+  --fp-border:        var(--fp-gray-200);
+  --fp-input:         var(--fp-gray-100);
+
+  --fp-fg-1:          var(--fp-charcoal);   /* body text */
+  --fp-fg-2:          #3a3a3a;              /* secondary text */
+  --fp-fg-3:          var(--fp-gray-500);   /* tertiary, labels */
+
+  --fp-accent:        var(--fp-blueprint);
+  --fp-accent-fg:     var(--fp-white);
+  --fp-destructive:   var(--fp-burgundy);
+
+  /* ---------- Signature gradients (role-led) ---------- */
+  --fp-grad-engineering: linear-gradient(135deg, #1e4e8c 0%, #0d2648 100%);
+  --fp-grad-programming: linear-gradient(135deg, #00c853 0%, #008f3a 100%);
+  --fp-grad-research:    linear-gradient(135deg, #8b1e3f 0%, #3e0c1b 100%);
+  --fp-grad-triptych:    linear-gradient(135deg, #1e4e8c 0%, #00c853 50%, #8b1e3f 100%);
+  --fp-grad-hero-overlay: linear-gradient(90deg, #ffffff 0%, rgba(255,255,255,0.8) 60%, transparent 100%);
+  --fp-grad-dark:     linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  /* Back-compat aliases */
+  --fp-grad-cyan:     var(--fp-grad-engineering);
+  --fp-grad-indigo:   var(--fp-grad-engineering);
+  --fp-grad-orange:   var(--fp-grad-research);
+
+  /* ---------- Glow (per-role halos) ---------- */
+  --fp-glow-blueprint: 0 0 20px rgba(30, 78, 140, 0.30);
+  --fp-glow-terminal:  0 0 20px rgba(0, 200, 83, 0.30);
+  --fp-glow-burgundy:  0 0 20px rgba(139, 30, 63, 0.30);
+  /* Back-compat */
+  --fp-glow-cyan:     var(--fp-glow-blueprint);
+  --fp-glow-cyan-hv:  0 0 30px rgba(30, 78, 140, 0.50);
+  --fp-glow-orange:   var(--fp-glow-burgundy);
+
+  /* ---------- Shadow scale ---------- */
+  --fp-shadow-xs:     0 1px 2px rgba(0,0,0,0.05);
+  --fp-shadow-sm:     0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --fp-shadow-md:     0 4px 10px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+  --fp-shadow-lg:     0 10px 24px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+
+  /* ---------- Radii (shadcn-derived; rounded but restrained) ---------- */
+  --fp-radius:        0.5rem;           /* 8px base */
+  --fp-radius-sm:     calc(var(--fp-radius) - 4px);  /* 4px */
+  --fp-radius-md:     calc(var(--fp-radius) - 2px);  /* 6px */
+  --fp-radius-lg:     var(--fp-radius);               /* 8px */
+  --fp-radius-xl:     calc(var(--fp-radius) + 4px);  /* 12px */
+  --fp-radius-full:   9999px;
+
+  /* ---------- Spacing (Tailwind-aligned 4px base) ---------- */
+  --fp-space-1:       0.25rem;
+  --fp-space-2:       0.5rem;
+  --fp-space-3:       0.75rem;
+  --fp-space-4:       1rem;
+  --fp-space-6:       1.5rem;
+  --fp-space-8:       2rem;
+  --fp-space-12:      3rem;
+  --fp-space-16:      4rem;
+  --fp-space-20:      5rem;
+
+  /* ---------- Typography families ---------- */
+  --fp-font-display:  'Space Mono', ui-monospace, Menlo, monospace;
+  --fp-font-body:     'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --fp-font-mono:     'Space Mono', ui-monospace, Menlo, monospace;
+
+  /* ---------- Type scale ---------- */
+  --fp-text-xs:       0.75rem;   /* 12px — labels, tag pills */
+  --fp-text-sm:       0.875rem;  /* 14px — small, meta */
+  --fp-text-base:     1rem;      /* 16px — body */
+  --fp-text-lg:       1.125rem;  /* 18px — lead */
+  --fp-text-xl:       1.25rem;   /* 20px — h4 */
+  --fp-text-2xl:      1.5rem;    /* 24px — h3 */
+  --fp-text-3xl:      2rem;      /* 32px — h2 */
+  --fp-text-5xl:      3rem;      /* 48px — h1 mobile */
+  --fp-text-7xl:      4.5rem;    /* 72px — h1 desktop */
+
+  /* ---------- Motion ---------- */
+  --fp-ease-snap:     cubic-bezier(0.34, 1.56, 0.64, 1);  /* signature elastic */
+  --fp-ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --fp-ease-smooth:   cubic-bezier(0.2, 0.8, 0.2, 1);     /* premium card lift  */
+  --fp-ease-swift:    cubic-bezier(0.22, 1, 0.36, 1);     /* scroll reveal      */
+  --fp-dur-fast:      180ms;
+  --fp-dur-med:       300ms;
+  --fp-dur-slow:      600ms;
+  --fp-dur-breath:    3.2s;
+
+  /* ---------- Technical grid (hero + section backdrops) ---------- */
+  --fp-grid-line:     rgba(0, 0, 0, 0.04);
+  --fp-grid-size:     40px;
+}
+
+/* ---------- Base element styling ---------- */
+html, body {
+  background: var(--fp-background);
+  color: var(--fp-foreground);
+  font-family: var(--fp-font-body);
+  font-size: var(--fp-text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--fp-font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--fp-fg-1);
+  line-height: 1.15;
+}
+
+h1 { font-size: var(--fp-text-5xl); font-weight: 700; }
+@media (min-width: 768px) { h1 { font-size: var(--fp-text-7xl); } }
+h2 { font-size: var(--fp-text-3xl); }
+@media (min-width: 768px) { h2 { font-size: 3rem; } }
+h3 { font-size: var(--fp-text-2xl); }
+h4 { font-size: var(--fp-text-xl); }
+
+p  { font-size: var(--fp-text-base); color: var(--fp-fg-2); line-height: 1.65; }
+
+code, kbd, samp, pre, .fp-mono {
+  font-family: var(--fp-font-mono);
+  font-size: 0.9em;
+}
+
+/* ---------- Utility classes (optional, used by cards + kit) ---------- */
+.fp-display { font-family: var(--fp-font-display); letter-spacing: -0.02em; }
+.fp-body    { font-family: var(--fp-font-body); }
+.fp-label   { font-family: var(--fp-font-mono); font-size: var(--fp-text-xs); letter-spacing: 0.04em; color: var(--fp-fg-3); text-transform: uppercase; }
+
+.fp-gradient-cyan-text {
+  background: var(--fp-grad-cyan);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.fp-gradient-indigo-text {
+  background: var(--fp-grad-indigo);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.fp-gradient-orange-text {
+  background: var(--fp-grad-orange);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Motion primitives (used across the kit) ---------- */
+@keyframes fp-spin      { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@keyframes fp-fade-up   { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes fp-fade-in   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fp-pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.85); } }
+@keyframes fp-shimmer   { 0% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+@keyframes fp-breathe   { 0%,100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.08); opacity: 1; } }
+@keyframes fp-draw-line { from { stroke-dashoffset: var(--fp-dash, 200); } to { stroke-dashoffset: 0; } }
+
+.fp-gear-slow   { animation: fp-spin 60s linear infinite; transform-origin: center; }
+.fp-gear-medium { animation: fp-spin 40s linear infinite; transform-origin: center; }
+.fp-gear-fast   { animation: fp-spin 20s linear infinite; transform-origin: center; }
+.fp-gear-reverse{ animation: fp-spin 50s linear infinite reverse; transform-origin: center; }
+
+.fp-fade-up        { opacity: 0; animation: fp-fade-up var(--fp-dur-slow) var(--fp-ease-swift) forwards; }
+.fp-fade-up.d-100  { animation-delay: 100ms; }
+.fp-fade-up.d-200  { animation-delay: 200ms; }
+.fp-fade-up.d-300  { animation-delay: 300ms; }
+.fp-fade-up.d-400  { animation-delay: 400ms; }
+.fp-fade-up.d-500  { animation-delay: 500ms; }
+.fp-fade-up.d-700  { animation-delay: 700ms; }
+.fp-fade-up.d-900  { animation-delay: 900ms; }
+
+.fp-pulse-dot { animation: fp-pulse-dot 2s ease-in-out infinite; }
+.fp-breathe   { animation: fp-breathe var(--fp-dur-breath) ease-in-out infinite; }
+
+/* Premium card — the Fluxo recipe, tuned to Filipe's palette */
+.fp-card {
+  background: var(--fp-white);
+  border: 1px solid var(--fp-border);
+  border-radius: var(--fp-radius-xl);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02), 0 8px 16px -6px rgba(0,0,0,0.04);
+  transition: transform var(--fp-dur-med) var(--fp-ease-smooth),
+              box-shadow var(--fp-dur-med) var(--fp-ease-smooth),
+              border-color var(--fp-dur-med) var(--fp-ease-smooth);
+  will-change: transform;
+}
+.fp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.03), 0 16px 32px -8px rgba(0,0,0,0.08);
+  border-color: #cbd5e1;
+}
+
+/* Technical grid — the shared canvas pattern */
+.fp-technical-grid {
+  background-size: var(--fp-grid-size) var(--fp-grid-size);
+  background-image:
+    linear-gradient(to right, var(--fp-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--fp-grid-line) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, black 20%, transparent 95%);
+  -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 95%);
+}
+
+/* Shimmer overlay for primary buttons */
+.fp-shimmer-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.fp-shimmer-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.22) 50%, transparent 70%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.fp-shimmer-btn:hover::after {
+  animation: fp-shimmer 1.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Status pill — the "Beta" / "Disponível" badge with pulsing dot */
+.fp-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fp-space-2);
+  padding: 6px 12px;
+  background: var(--fp-white);
+  border: 1px solid var(--fp-border);
+  border-radius: var(--fp-radius-full);
+  box-shadow: var(--fp-shadow-xs);
+  font-family: var(--fp-font-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--fp-fg-3);
+  letter-spacing: -0.01em;
+}
+.fp-status-pill .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--fp-cyan);
+  box-shadow: 0 0 0 3px rgba(0,217,255,0.18);
+}
+
+/* Pill button — CONDOR-flavored */
+.fp-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: var(--fp-radius-full);
+  font-family: var(--fp-font-body);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform var(--fp-dur-fast) var(--fp-ease-smooth),
+              box-shadow var(--fp-dur-fast) var(--fp-ease-smooth),
+              background-color var(--fp-dur-fast) var(--fp-ease-smooth);
+}
+.fp-pill-btn.primary   { background: var(--fp-charcoal); color: var(--fp-white); box-shadow: 0 4px 12px -2px rgba(0,0,0,0.18); }
+.fp-pill-btn.primary:hover { transform: translateY(-1px) scale(1.02); box-shadow: 0 8px 20px -4px rgba(0,0,0,0.25); }
+.fp-pill-btn.accent    { background: var(--fp-grad-cyan); color: var(--fp-white); box-shadow: var(--fp-glow-cyan); }
+.fp-pill-btn.accent:hover { transform: translateY(-1px) scale(1.02); box-shadow: var(--fp-glow-cyan-hv); }
+.fp-pill-btn.ghost     { background: transparent; color: var(--fp-fg-1); border: 1px solid var(--fp-border); }
+.fp-pill-btn.ghost:hover { background: var(--fp-gray-50); border-color: var(--fp-charcoal); }
+

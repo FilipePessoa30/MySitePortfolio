@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Filipe Pessoa · Portfolio UI Kit (Print)</title>
+<link rel="stylesheet" href="../../colors_and_type.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fp-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --fp-font-display: 'Instrument Serif', Georgia, serif;
+    --fp-font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  }
+  html, body { margin:0; padding:0; background:#fff; font-family: var(--fp-font-body); color: var(--fp-fg-1); -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { font-family: var(--fp-font-display); font-weight: 400; letter-spacing: -.01em; }
+
+  /* ---- Kill animations & scroll-linked transforms ---- */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  /* ---- NAV (static, no fixed positioning in print) ---- */
+  .fp-nav {
+    padding: 16px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+    background: #fff;
+    border-bottom: 1px solid var(--fp-border);
+  }
+  .fp-nav__brand { display:flex; align-items:center; gap:10px; }
+  .fp-nav__brand-text { font-family: var(--fp-font-mono); font-size:13px; font-weight:700; letter-spacing:.02em; }
+  .fp-nav__avatar {
+    width:36px; height:36px; border-radius:999px; overflow:hidden;
+    padding:1px; background: linear-gradient(135deg,#1e4e8c,#0d2648);
+  }
+  .fp-nav__avatar img { width:100%; height:100%; border-radius:999px; object-fit:cover; object-position:42% 16%; display:block; }
+  .fp-nav__links { display:flex; gap:8px; }
+  .fp-nav__link {
+    padding: 6px 12px; border-radius:8px;
+    font-family: var(--fp-font-mono); font-size:11px; letter-spacing:.05em;
+    color: var(--fp-fg-2);
+  }
+  .fp-nav__link.active { background:#1a1a1a; color:#fff; }
+
+  /* ---- SECTION ---- */
+  section { padding: 80px 40px; position: relative; }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* ---- HERO ---- */
+  .hero { background:#fff; padding: 60px 40px 80px; }
+  .hero-grid { display:grid; grid-template-columns: 1.2fr 1fr; gap:48px; align-items:center; }
+  .portrait-col { display:flex; justify-content:center; align-items:center; }
+  .status-pill {
+    display:inline-flex; align-items:center; gap:10px;
+    padding:6px 14px; border-radius:999px;
+    font-family: var(--fp-font-mono); font-size:11px; letter-spacing:.05em;
+    background:#fff; color: var(--fp-fg-2);
+    border:1px solid var(--fp-border); margin-bottom:24px;
+  }
+  .status-pill .dot { width:8px; height:8px; border-radius:999px; background:#00c853; }
+  .hero h1 { font-size: 72px; line-height: .98; margin:0 0 24px; letter-spacing:-.025em; font-weight:400; }
+  .grad-blue  { background: linear-gradient(135deg,#163c6c,#0d2648); -webkit-background-clip:text; background-clip:text; color:transparent; font-style:italic; }
+  .grad-green { background: linear-gradient(135deg,#008f3a,#064b22); -webkit-background-clip:text; background-clip:text; color:transparent; font-style:italic; }
+  .grad-burg  { background: linear-gradient(135deg,#6a152f,#3e0c1b); -webkit-background-clip:text; background-clip:text; color:transparent; font-style:italic; }
+  .hero p.lead { font-size:16px; color: var(--fp-fg-2); max-width:520px; line-height:1.55; margin:0 0 28px; }
+  .hero p.lead strong { color: var(--fp-fg-1); font-weight:600; }
+  .cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:28px; }
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:999px; font-size:13px; font-weight:600; font-family: var(--fp-font-body); border:1px solid transparent; }
+  .btn-accent { background:#1e4e8c; color:#fff; }
+  .btn-ghost  { background:#fff; color: var(--fp-fg-1); border-color: var(--fp-border); }
+  .socials { display:flex; gap:10px; }
+  .social { width:40px; height:40px; border-radius:999px; border:1px solid var(--fp-border); display:inline-flex; align-items:center; justify-content:center; color: var(--fp-fg-1); font-family: var(--fp-font-mono); font-size:10px; }
+
+  .portrait-wrap { position:relative; width:100%; max-width: 360px; aspect-ratio:3/4; }
+  .portrait-ring {
+    position:absolute; inset:-2px; border-radius:24px;
+    background: linear-gradient(135deg,#1e4e8c 0%,#0d2648 30%,#00c853 60%,#8b1e3f 100%);
+    opacity:.85;
+  }
+  .portrait {
+    position:relative; width:100%; height:100%; border-radius:22px; overflow:hidden;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.3);
+  }
+  .portrait img { width:100%; height:100%; object-fit:cover; object-position:center 22%; }
+  .tag-float {
+    position:absolute; z-index:3;
+    width:46px; height:46px; border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+  }
+  .tag-float.bg-dark  { background:#1a1a1a; }
+  .tag-float.bg-black { background:#0f0f0f; }
+
+  /* ---- SECTION HEADING ---- */
+  .kicker {
+    display:inline-flex; align-items:center; gap:8px;
+    font-family: var(--fp-font-mono); font-size:11px; letter-spacing:.12em;
+    color: var(--fp-fg-3); text-transform:uppercase; margin-bottom:12px;
+  }
+  .kicker .bullet { width:8px; height:8px; border-radius:999px; }
+  section h2 { font-size: 44px; line-height:1.05; margin:0 0 36px; letter-spacing:-.02em; font-weight:400; max-width: 760px; }
+
+  /* ---- ABOUT ---- */
+  .about { background:#fff; }
+  .about-grid { display:grid; grid-template-columns: 1.3fr 1fr; gap:40px; align-items:start; }
+  .about p { font-size:15px; line-height:1.65; color: var(--fp-fg-2); margin:0 0 14px; }
+  .about p strong { color: var(--fp-fg-1); font-weight:600; }
+  .exp { display:flex; flex-direction:column; gap:12px; }
+  .exp-card {
+    padding:14px 18px; background: var(--fp-bg-2); border:1px solid var(--fp-border);
+    border-radius: 14px;
+  }
+  .exp-card .period { font-family: var(--fp-font-mono); font-size:10px; color: var(--fp-fg-3); margin-bottom:3px; }
+  .exp-card .role { font-size:14px; font-weight:700; color: var(--fp-fg-1); }
+  .exp-card .org { font-size:12px; color: var(--fp-fg-2); margin-top:2px; }
+
+  .skills { margin-top: 48px; }
+  .skills-label { font-family: var(--fp-font-mono); font-size:11px; letter-spacing:.12em; color: var(--fp-fg-3); text-transform:uppercase; margin-bottom:16px; }
+  .skills-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+  .skill-card {
+    padding:20px; background: var(--fp-bg-1); border:1px solid var(--fp-border); border-radius:14px;
+    break-inside: avoid;
+  }
+  .skill-card .cat { font-family: var(--fp-font-mono); font-size:10px; letter-spacing:.08em; color:#1e4e8c; margin-bottom:10px; text-transform:uppercase; }
+  .skill-card .tags { display:flex; flex-wrap:wrap; gap:5px; }
+  .tag {
+    font-family: var(--fp-font-mono); font-size:11px; padding:3px 8px;
+    border-radius:5px; background:#fff; border:1px solid var(--fp-border); color: var(--fp-fg-1);
+  }
+
+  /* ---- PROJECTS ---- */
+  .projects { background: var(--fp-bg-2); }
+  .projects-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:18px; }
+  .project {
+    position: relative; padding:22px; background:#fff; border:1px solid var(--fp-border);
+    border-radius:16px; overflow:hidden; break-inside: avoid;
+  }
+  .project .stripe { position:absolute; top:0; left:0; right:0; height:3px; }
+  .project .meta-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  .project .proj-tag {
+    font-family: var(--fp-font-mono); font-size:9px; letter-spacing:.14em;
+    padding:3px 8px; border-radius:4px;
+  }
+  .project .year { font-family: var(--fp-font-mono); font-size:10px; color: var(--fp-fg-3); }
+  .project h3 { font-size:19px; margin:0 0 8px; line-height:1.2; }
+  .project p { font-size:13px; color: var(--fp-fg-2); line-height:1.55; margin:0 0 12px; }
+  .project .tech-row { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:12px; }
+  .project .tech { font-family: var(--fp-font-mono); font-size:10px; padding:2px 7px; border-radius:4px; background: var(--fp-bg-2); color: var(--fp-fg-1); }
+  .project .link { font-family: var(--fp-font-mono); font-size:11px; letter-spacing:.03em; }
+
+  /* ---- CONTACT ---- */
+  .contact { background:#1a1a1a; color:#fff; }
+  .contact-grid { display:grid; grid-template-columns: 1fr 1.1fr; gap:48px; }
+  .contact h2 { color:#fff; margin-bottom:16px; font-size:40px; }
+  .contact .lead { color:#a0a0a0; font-size:15px; line-height:1.6; max-width:400px; margin:0 0 28px; }
+  .contact .kicker { color:#00c853; }
+  .contact-info { display:flex; flex-direction:column; gap:14px; }
+  .contact-info .row { display:flex; align-items:center; gap:12px; color:#e0e0e0; font-size:13px; }
+  .contact-info .icon {
+    width:32px; height:32px; border-radius:9px; background:#2a2a2a;
+    display:inline-flex; align-items:center; justify-content:center; color:#00c853;
+    font-family: var(--fp-font-mono); font-size:11px;
+  }
+  .form-card {
+    padding:28px; background:#0f0f0f; border:1px solid #2a2a2a; border-radius:16px;
+  }
+  .form-card label { display:block; font-family: var(--fp-font-mono); font-size:9px; letter-spacing:.15em; color:#a0a0a0; margin-bottom:6px; }
+  .form-card .field {
+    width:100%; padding:11px 13px; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:9px;
+    color:#fff; font-size:13px; font-family: var(--fp-font-body); margin-bottom:14px;
+  }
+  .form-card .submit {
+    width:100%; padding:12px 18px; background:#00c853; color:#fff; border:none;
+    border-radius:9px; font-size:13px; font-weight:700; font-family: var(--fp-font-body);
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+
+  /* ---- FOOTER ---- */
+  .fp-footer {
+    padding: 24px 40px; background:#0a0a0a; color:#a0a0a0;
+    display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+    font-family: var(--fp-font-mono); font-size:10px; letter-spacing:.05em;
+  }
+  .fp-footer a { color:#4d8fd9; }
+
+  /* ---- PRINT ---- */
+  @page { size: A4; margin: 0.5cm; }
+  @media print {
+    html, body { background:#fff !important; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .hero    { page-break-after: always; break-after: page; }
+    .about   { page-break-after: always; break-after: page; }
+    .projects{ page-break-after: always; break-after: page; }
+    .contact { page-break-after: always; break-after: page; }
+    section, .project, .skill-card, .exp-card { page-break-inside: avoid; break-inside: avoid; }
+    .fp-nav { display: none; }
+    .hero h1 { font-size: 54px; }
+    section h2 { font-size: 36px; }
+    section { padding: 48px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="fp-nav">
+  <div class="fp-nav__brand">
+    <span class="fp-nav__avatar"><img src="../../assets/filipe-portrait.jpg" alt="Filipe Pessoa"/></span>
+    <span class="fp-nav__brand-text">FILIPE · PESSOA</span>
+  </div>
+  <div class="fp-nav__links">
+    <span class="fp-nav__link active">INÍCIO</span>
+    <span class="fp-nav__link">SOBRE</span>
+    <span class="fp-nav__link">PROJETOS</span>
+    <span class="fp-nav__link">CONTATO</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="status-pill"><span class="dot"></span>Disponível para colaborações, trabalho e pesquisa</div>
+      <h1>
+        Engenheiro de <span class="grad-blue">Produção</span>,<br/>
+        <span class="grad-green">Programador</span> e <span class="grad-burg">Pesquisador</span>.
+      </h1>
+      <p class="lead">
+        Especialista em <strong>Computação Científica</strong>, <strong>Otimização</strong> e
+        <strong>Inteligência Artificial</strong>. Doutorando em Ciências Computacionais na UERJ,
+        bolsista CAPES. Baseado no Rio de Janeiro · Brasil.
+      </p>
+      <div class="cta-row">
+        <span class="btn btn-accent">Ver Projetos →</span>
+        <span class="btn btn-ghost">Entrar em contato</span>
+      </div>
+      <div class="socials">
+        <span class="social">GH</span>
+        <span class="social">@</span>
+        <span class="social">in</span>
+      </div>
+    </div>
+    <div class="portrait-col">
+    <div class="portrait-wrap">
+      <div class="portrait-ring"></div>
+      <div class="portrait">
+        <img src="../../assets/filipe-secondary.jpg" alt="Filipe Pessoa Sousa"/>
+      </div>
+
+      <!-- Python -->
+      <div class="tag-float bg-dark" style="top:-3%;left:-7%" title="Python">
+        <svg viewBox="0 0 128 128" width="24" height="24" aria-hidden="true">
+          <linearGradient id="pyA" x1="70.252" x2="170.659" y1="1237.476" y2="1151.089" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5A9FD4"/><stop offset="1" stop-color="#306998"/></linearGradient>
+          <linearGradient id="pyB" x1="209.474" x2="173.62" y1="1098.811" y2="1149.537" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFD43B"/><stop offset="1" stop-color="#FFE873"/></linearGradient>
+          <path fill="url(#pyA)" d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z"/>
+          <path fill="url(#pyB)" d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268zM77.809 87.927c2.561 0 4.634 2.097 4.634 4.692 0 2.602-2.074 4.719-4.634 4.719-2.55 0-4.633-2.117-4.633-4.719 0-2.595 2.083-4.692 4.633-4.692z"/>
+        </svg>
+      </div>
+
+      <!-- HuggingFace -->
+      <div class="tag-float bg-black" style="top:9%;right:-7%" title="HuggingFace">
+        <svg viewBox="0 0 95 88" width="22" height="22" aria-hidden="true">
+          <path fill="#FF9D00" d="M47.21 76.07c19.64 0 35.56-15.92 35.56-35.56S66.85 4.95 47.21 4.95 11.65 20.87 11.65 40.51s15.92 35.56 35.56 35.56Z"/>
+          <path fill="#FFD21E" d="M81.49 52.74c-.32-1.23-1.39-2.13-2.66-2.26a3.17 3.17 0 0 0-3.27 2.17c-3.57 10.7-11.62 19.1-21.33 23.06a27.72 27.72 0 0 1-17.11 1.2c-9.07-2.2-17.32-8.63-22.33-17.05a3.17 3.17 0 0 0-3.62-1.42 3.18 3.18 0 0 0-2.29 3.14c.05 1.42.42 2.38.89 3.19 5.97 10.04 15.77 17.69 26.55 20.32 6.85 1.67 14.25 1.19 21.03-1.58 11.62-4.74 21.2-14.79 25.41-27.42.32-.95.77-2.31.73-3.35Z"/>
+          <circle cx="32.13" cy="39.69" r="5" fill="#3A3B45"/>
+          <circle cx="62.15" cy="39.69" r="5" fill="#3A3B45"/>
+          <path fill="#3A3B45" d="M55.68 56.56c-.18 3.09-4.31 5.5-8.34 5.37-4.02-.13-7.94-2.76-7.76-5.85.18-3.09 4.2-2.87 8.23-2.74 4.02.13 8.05.14 7.87 3.22Z"/>
+        </svg>
+      </div>
+
+      <!-- Power BI -->
+      <div class="tag-float bg-dark" style="bottom:26%;right:-9%" title="Power BI">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <defs><linearGradient id="bi" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FFD34F"/><stop offset="1" stop-color="#E8A81C"/></linearGradient></defs>
+          <path fill="url(#bi)" d="M9 3h4a1 1 0 0 1 1 1v17H8V4a1 1 0 0 1 1-1zm7 5h3a1 1 0 0 1 1 1v12h-4V8zM4 13h3a1 1 0 0 1 1 1v7H3v-7a1 1 0 0 1 1-1z"/>
+        </svg>
+      </div>
+
+      <!-- TensorFlow -->
+      <div class="tag-float bg-black" style="bottom:-4%;left:-7%" title="TensorFlow">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path fill="#FF6F00" d="M1.292 5.856 11.54 0v24l-4.095-2.378V7.603l-6.168 3.564.015-5.31zm21.43 5.311-.014-5.31L12.46 0v24l4.095-2.378V14.87l3.092 1.788-.018-4.77-3.074-1.759V7.603l6.168 3.564z"/>
+        </svg>
+      </div>
+    </div><!-- /portrait-wrap -->
+    </div><!-- /portrait-col -->
+  </div><!-- /hero-grid -->
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="container">
+    <div class="kicker"><span class="bullet" style="background:#1e4e8c"></span>01 · SOBRE MIM</div>
+    <h2>Ciência computacional aplicada a problemas reais.</h2>
+    <div class="about-grid">
+      <div>
+        <p>
+          Engenheiro de Produção pela UFF, Mestre na mesma área e atualmente Doutorando em
+          Ciências Computacionais na UERJ, com bolsa CAPES. Minha pesquisa investiga a interseção
+          entre <strong>otimização matemática</strong> e <strong>aprendizado de máquina</strong> para
+          sistemas industriais complexos.
+        </p>
+        <p>
+          Trabalho com Python, C++ e R, com foco em algoritmos de otimização combinatória,
+          simulação estocástica e modelos preditivos. Interesse especial por problemas que
+          combinam precisão quantitativa e impacto industrial tangível.
+        </p>
+      </div>
+      <div class="exp">
+        <div class="exp-card" style="border-left:3px solid #8b1e3f">
+          <div class="period">2024 — presente</div>
+          <div class="role">Doutorando — Ciências Computacionais</div>
+          <div class="org">UERJ · Bolsista CAPES</div>
+        </div>
+        <div class="exp-card" style="border-left:3px solid #00c853">
+          <div class="period">2022 — 2024</div>
+          <div class="role">Mestre em Engenharia de Produção</div>
+          <div class="org">UFF · Otimização e IA</div>
+        </div>
+        <div class="exp-card" style="border-left:3px solid #1e4e8c">
+          <div class="period">2017 — 2022</div>
+          <div class="role">Engenheiro de Produção</div>
+          <div class="org">UFF · Bacharelado</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skills">
+      <div class="skills-label">Stack técnica</div>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="cat">Linguagens</div>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">C++</span><span class="tag">R</span>
+            <span class="tag">JavaScript</span><span class="tag">SQL</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="cat">Otimização &amp; ML</div>
+          <div class="tags">
+            <span class="tag">Pyomo</span><span class="tag">Gurobi</span>
+            <span class="tag">scikit-learn</span><span class="tag">PyTorch</span><span class="tag">TensorFlow</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="cat">Dados &amp; Ferramentas</div>
+          <div class="tags">
+            <span class="tag">Pandas</span><span class="tag">NumPy</span>
+            <span class="tag">Git</span><span class="tag">Docker</span><span class="tag">LaTeX</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects">
+  <div class="container">
+    <div class="kicker"><span class="bullet" style="background:#8b1e3f"></span>02 · PROJETOS &amp; PESQUISA</div>
+    <h2>Onde matemática encontra código.</h2>
+    <div class="projects-grid">
+      <article class="project">
+        <div class="stripe" style="background:#8b1e3f"></div>
+        <div class="meta-row">
+          <span class="proj-tag" style="background:#8b1e3f18;color:#8b1e3f">DOUTORADO</span>
+          <span class="year">2025</span>
+        </div>
+        <h3>Otimização de Sistemas Energéticos Híbridos</h3>
+        <p>Modelos MILP combinados com redes neurais para operação ótima de microgrids solares-eólicos.</p>
+        <div class="tech-row">
+          <span class="tech">Python</span><span class="tech">Pyomo</span>
+          <span class="tech">Gurobi</span><span class="tech">PyTorch</span>
+        </div>
+        <span class="link" style="color:#8b1e3f">VER DETALHES ↗</span>
+      </article>
+
+      <article class="project">
+        <div class="stripe" style="background:#1e4e8c"></div>
+        <div class="meta-row">
+          <span class="proj-tag" style="background:#1e4e8c18;color:#1e4e8c">PESQUISA</span>
+          <span class="year">2024</span>
+        </div>
+        <h3>Scheduling Estocástico em Manufatura</h3>
+        <p>Algoritmos híbridos metaheurística + ML para job-shop scheduling com incerteza de demanda.</p>
+        <div class="tech-row">
+          <span class="tech">C++</span><span class="tech">OR-Tools</span><span class="tech">scikit-learn</span>
+        </div>
+        <span class="link" style="color:#1e4e8c">VER DETALHES ↗</span>
+      </article>
+
+      <article class="project">
+        <div class="stripe" style="background:#00c853"></div>
+        <div class="meta-row">
+          <span class="proj-tag" style="background:#00c85318;color:#008f3a">MESTRADO</span>
+          <span class="year">2023</span>
+        </div>
+        <h3>Previsão de Demanda em Supply Chains</h3>
+        <p>Ensemble de modelos ARIMA, LSTM e XGBoost para cadeias industriais brasileiras.</p>
+        <div class="tech-row">
+          <span class="tech">R</span><span class="tech">Python</span><span class="tech">TensorFlow</span>
+        </div>
+        <span class="link" style="color:#008f3a">VER DETALHES ↗</span>
+      </article>
+
+      <article class="project">
+        <div class="stripe" style="background:#1e4e8c"></div>
+        <div class="meta-row">
+          <span class="proj-tag" style="background:#1e4e8c18;color:#1e4e8c">ACADÊMICO</span>
+          <span class="year">2023</span>
+        </div>
+        <h3>Simulação Monte Carlo · Confiabilidade</h3>
+        <p>Análise de confiabilidade de sistemas em paralelo-série com dependência estocástica.</p>
+        <div class="tech-row">
+          <span class="tech">Python</span><span class="tech">NumPy</span><span class="tech">SciPy</span>
+        </div>
+        <span class="link" style="color:#1e4e8c">VER DETALHES ↗</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact">
+  <div class="container contact-grid">
+    <div>
+      <div class="kicker">03 · CONTATO</div>
+      <h2>Vamos construir<br/>algo preciso?</h2>
+      <p class="lead">Aberto a colaborações de pesquisa, consultorias em otimização e projetos de computação científica.</p>
+      <div class="contact-info">
+        <div class="row"><span class="icon">@</span>Filipe.Pessoa18@gmail.com</div>
+        <div class="row"><span class="icon">📍</span>Rio de Janeiro · Brasil</div>
+        <div class="row"><span class="icon">💼</span>UERJ · Doutorado em Ciências Computacionais</div>
+      </div>
+    </div>
+    <div class="form-card">
+      <label>NOME</label>
+      <div class="field">&nbsp;</div>
+      <label>E-MAIL</label>
+      <div class="field">&nbsp;</div>
+      <label>MENSAGEM</label>
+      <div class="field" style="height:80px">&nbsp;</div>
+      <button class="submit">Enviar mensagem →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="fp-footer">
+  <span>© 2025 · FILIPE PESSOA SOUSA</span>
+  <span>BUILT WITH <span style="color:#00c853">PRECISION</span> · <a href="https://github.com/FilipePessoa30">GITHUB</a></span>
+</footer>
+
+<script>
+  (async () => {
+    if (document.fonts && document.fonts.ready) {
+      try { await document.fonts.ready; } catch (e) {}
+    }
+    setTimeout(() => window.print(), 600);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"/>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>body{margin:0;padding:22px;background:#fff;font-family:var(--fp-font-body)}
+.blk{display:flex;gap:14px;align-items:flex-end}
+.box{background:#fff;border:1px solid var(--fp-border);display:flex;align-items:center;justify-content:center;font-family:var(--fp-font-mono);font-size:10px;color:var(--fp-fg-3);width:86px;height:72px}
+.shbox{width:120px;height:70px;background:#fff;border-radius:var(--fp-radius-lg);margin-top:10px;display:flex;align-items:center;justify-content:center;font-family:var(--fp-font-mono);font-size:10px;color:var(--fp-fg-3)}
+h4{font-family:var(--fp-font-mono);font-size:10px;text-transform:uppercase;color:var(--fp-fg-3);margin:0 0 8px;letter-spacing:.05em}
+.section{margin-bottom:18px}
+</style></head><body>
+<div class="section"><h4>Corner Radii</h4>
+<div class="blk">
+  <div class="box" style="border-radius:0">0</div>
+  <div class="box" style="border-radius:4px">4</div>
+  <div class="box" style="border-radius:6px">6</div>
+  <div class="box" style="border-radius:8px">8 · base</div>
+  <div class="box" style="border-radius:12px">12 · xl</div>
+  <div class="box" style="border-radius:9999px">full</div>
+</div></div>
+<div class="section"><h4>Shadow Scale</h4>
+<div class="blk">
+  <div class="shbox" style="box-shadow:var(--fp-shadow-xs)">xs</div>
+  <div class="shbox" style="box-shadow:var(--fp-shadow-sm)">sm</div>
+  <div class="shbox" style="box-shadow:var(--fp-shadow-md)">md</div>
+  <div class="shbox" style="box-shadow:var(--fp-shadow-lg)">lg</div>
+  <div class="shbox" style="box-shadow:var(--fp-glow-cyan);border:1px solid rgba(0,217,255,.3)">glow-cyan</div>
+</div></div>
+</body></html>
