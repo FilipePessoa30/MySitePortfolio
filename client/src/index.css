@@ -77,6 +77,18 @@
   --sidebar-accent-foreground: #1a1a1a;
   --sidebar-border: #e0e0e0;
   --sidebar-ring: #00d9ff;
+
+  /* New Portfolio Design System */
+  --fp-fg-1: #1a1a1a;
+  --fp-fg-2: #666666;
+  --fp-fg-3: #999999;
+  --fp-bg-1: #ffffff;
+  --fp-bg-2: #f5f5f5;
+  --fp-border: #e0e0e0;
+  --fp-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --fp-font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --fp-font-display: 'Instrument Serif', Georgia, serif;
+  --fp-ease-swift: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .dark {
@@ -112,6 +124,14 @@
   --sidebar-accent-foreground: #1a1a1a;
   --sidebar-border: #2a2a2a;
   --sidebar-ring: #00d9ff;
+
+  /* New Portfolio Design System Dark */
+  --fp-fg-1: #ffffff;
+  --fp-fg-2: #a0a0a0;
+  --fp-fg-3: #7a7a7a;
+  --fp-bg-1: #1a1a1a;
+  --fp-bg-2: #0f0f0f;
+  --fp-border: #2a2a2a;
 }
 
 @layer base {
@@ -211,6 +231,250 @@
 
   .gear-fast {
     animation: spin-fast 20s linear infinite;
+  }
+
+  /* New Portfolio Design System Animations */
+  @keyframes fp-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes fp-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fp-pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(0.85);
+    }
+  }
+
+  @keyframes fp-breathe {
+    0%, 100% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+  }
+
+  @keyframes fp-spin {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Portfolio Design System Classes */
+  .fp-fade-up {
+    opacity: 0;
+    animation: fp-fade-up 0.8s var(--fp-ease-swift) forwards;
+  }
+
+  .fp-fade-in {
+    opacity: 0;
+    animation: fp-fade-in 0.8s forwards;
+  }
+
+  .fp-pulse-dot {
+    animation: fp-pulse 2s ease-in-out infinite;
+  }
+
+  .fp-breathe {
+    animation: fp-breathe 4s ease-in-out infinite;
+  }
+
+  .fp-gear-slow {
+    animation: fp-spin 60s linear infinite;
+  }
+
+  .fp-gear-medium {
+    animation: fp-spin 40s linear infinite;
+  }
+
+  .fp-gear-fast {
+    animation: fp-spin 20s linear infinite;
+  }
+
+  .d-100 { animation-delay: 0.1s; }
+  .d-200 { animation-delay: 0.2s; }
+  .d-300 { animation-delay: 0.3s; }
+  .d-400 { animation-delay: 0.4s; }
+  .d-500 { animation-delay: 0.5s; }
+  .d-600 { animation-delay: 0.6s; }
+  .d-700 { animation-delay: 0.7s; }
+  .d-800 { animation-delay: 0.8s; }
+  .d-900 { animation-delay: 0.9s; }
+
+  /* Pill Button */
+  .fp-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-family: var(--fp-font-body);
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s var(--fp-ease-swift);
+  }
+
+  .fp-pill-btn.accent {
+    background: #1e4e8c;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(30, 78, 140, 0.35);
+  }
+
+  .fp-pill-btn.accent:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 36px rgba(30, 78, 140, 0.55);
+    background: #163c6c;
+  }
+
+  .fp-pill-btn.primary {
+    background: #1a1a1a;
+    color: #fff;
+  }
+
+  .fp-pill-btn.primary:hover {
+    background: #000;
+    transform: translateY(-2px);
+  }
+
+  .fp-pill-btn.ghost {
+    background: transparent;
+    color: var(--fp-fg-1);
+    border-color: var(--fp-border);
+  }
+
+  .fp-pill-btn.ghost:hover {
+    border-color: #1a1a1a;
+    background: #1a1a1a;
+    color: #fff;
+  }
+
+  .fp-pill-btn:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  /* Status Pill */
+  .fp-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-family: var(--fp-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    background: #fff;
+    color: var(--fp-fg-2);
+    border: 1px solid var(--fp-border);
+  }
+
+  .fp-status-pill .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    display: inline-block;
+  }
+
+  /* Card Hover */
+  .fp-card-hover {
+    transition: transform 0.25s var(--fp-ease-swift), box-shadow 0.25s, border-color 0.25s;
+  }
+
+  .fp-card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.18);
+    border-color: #1a1a1a;
+  }
+
+  /* Shimmer Button */
+  .fp-shimmer-btn {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fp-shimmer-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transition: left 0.6s;
+  }
+
+  .fp-shimmer-btn:hover::after {
+    left: 100%;
+  }
+
+  /* Gradient Text */
+  .fp-gradient-cyan-text {
+    background: linear-gradient(135deg, #163c6c, #0d2648);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-style: italic;
+  }
+
+  .fp-gradient-indigo-text {
+    background: linear-gradient(135deg, #008f3a, #064b22);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-style: italic;
+  }
+
+  .fp-gradient-orange-text {
+    background: linear-gradient(135deg, #6a152f, #3e0c1b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-style: italic;
+  }
+
+  /* Technical Grid */
+  .fp-technical-grid {
+    background-image:
+      linear-gradient(rgba(26, 26, 26, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26, 26, 26, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(circle at center, #000 0%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at center, #000 0%, transparent 80%);
+  }
+
+  /* Label */
+  .fp-label {
+    font-family: var(--fp-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--fp-fg-2);
+    text-transform: uppercase;
   }
 
   /* Glow effect */
