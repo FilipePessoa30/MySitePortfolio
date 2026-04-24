@@ -1,163 +1,101 @@
-# Filipe Portfolio
+# Filipe Pessoa · Portfólio
 
-Site de portfólio pessoal desenvolvido com React + Vite, com seções de apresentação, experiência, projetos e contato.
+Site de portfólio pessoal desenvolvido com React + Vite. Design **Industrial Precision** com paleta Triple Craft — Blueprint Blue (Engenharia), Terminal Green (Programação) e Academic Burgundy (Pesquisa).
 
-## Objetivo do projeto
+## Design System
 
-Este repositório contém o código-fonte de um site para apresentar:
+Fontes: **Space Mono** (display/mono) + **IBM Plex Sans** (corpo)
 
-- Perfil profissional e acadêmico
-- Principais áreas de atuação e competências
-- Projetos em destaque com links para GitHub
-- Canal de contato direto
+Paleta de cores:
 
-O projeto também inclui um servidor Express simples para servir os arquivos estáticos em cenários fora do Vercel.
+| Token | Valor | Uso |
+|---|---|---|
+| `--fp-blueprint` | `#1e4e8c` | Engenharia de Produção (primário) |
+| `--fp-terminal` | `#00c853` | Programação (secundário) |
+| `--fp-burgundy` | `#8b1e3f` | Pesquisa (destaque) |
+| `--fp-charcoal` | `#1a1a1a` | Texto / superfície escura |
 
 ## Stack tecnológica
 
 ### Frontend
 
-- React 19
-- TypeScript
+- React 19 + TypeScript
 - Vite 7
 - Tailwind CSS 4
-- Wouter (roteamento)
-- Radix UI (componentes base)
+- Framer Motion + CSS keyframes (gear, scroll-parallax, float)
 - Lucide React (ícones)
-- Sonner (toasts)
+- Wouter (roteamento)
+- Radix UI / shadcn-ui (primitivos)
 
-### Backend/Servidor de arquivos estáticos
+### Backend
 
-- Node.js
-- Express
-- esbuild (bundle do servidor)
+- Node.js + Express (serve o build estático fora do Vercel)
 
-## Estrutura principal
+## Estrutura do projeto
 
-- client/
-  - src/
-    - pages/
-      - Home.tsx: página principal
-      - NotFound.tsx: página 404
-    - components/
-      - Hero.tsx: seção de abertura
-      - About.tsx: seção sobre perfil e competências
-      - Projects.tsx: seção de projetos
-      - Contact.tsx: seção de contato e formulário
-      - Map.tsx: integração com Google Maps via proxy
-      - ui/: biblioteca de componentes de interface
-    - contexts/
-      - ThemeContext.tsx: contexto de tema
-    - App.tsx: roteamento e providers globais
-    - main.tsx: bootstrap da aplicação React
-- server/
-  - index.ts: servidor Express para servir build estático
-- shared/
-  - const.ts: constantes compartilhadas
-- vite.config.ts: configuração do Vite
-- vercel.json: configuração de deploy para Vercel
+```
+client/
+  public/assets/        # Imagens, vídeo hero, SVGs de marca
+  src/
+    pages/Home.tsx      # Layout principal + Nav + Footer
+    components/
+      Hero.tsx          # Seção hero com scroll-parallax e badges flutuantes
+      About.tsx         # Sobre, experiência e stack técnica
+      Projects.tsx      # Grid de projetos/pesquisa
+      Contact.tsx       # Formulário de contato (seção escura)
+      portfolio-kit.tsx # Componentes e hooks reutilizáveis do design system
+    index.css           # Tokens CSS do design system + Tailwind
+server/
+  index.ts              # Express para servir SPA em produção
+shared/
+  const.ts              # Constantes compartilhadas
+vite.config.ts
+vercel.json
+```
 
 ## Como executar localmente
 
-### Pré-requisitos
+Pré-requisitos: Node.js 20+ e pnpm 10+
 
-- Node.js 20+
-- pnpm 10+
-
-### Instalação
-
-1. Instalar dependências
-
+```bash
 pnpm install
-
-2. Rodar em desenvolvimento
-
 pnpm dev
+```
 
-A aplicação ficará disponível no host configurado pelo Vite (porta padrão do projeto: 3000 no dev server).
+A aplicação sobe na porta 3000 (ou a próxima disponível).
 
-## Scripts disponíveis
+## Scripts
 
-- pnpm dev: inicia ambiente de desenvolvimento (Vite)
-- pnpm build: gera build de produção do frontend e bundle do servidor
-- pnpm start: inicia servidor Node com os arquivos compilados
-- pnpm preview: executa preview do build do Vite
-- pnpm check: validação TypeScript sem emitir arquivos
-- pnpm format: formata o código com Prettier
+| Comando | Ação |
+|---|---|
+| `pnpm dev` | Servidor de desenvolvimento (Vite) |
+| `pnpm build` | Build de produção (frontend + bundle do servidor) |
+| `pnpm start` | Inicia servidor Node com o build |
+| `pnpm preview` | Preview do build do Vite |
+| `pnpm check` | Validação TypeScript |
 
-## Variáveis de ambiente
+## Deploy
 
-As variáveis abaixo são lidas pelo frontend (prefixo VITE\_):
+### Vercel (recomendado)
 
-- VITE_OAUTH_PORTAL_URL
-- VITE_APP_ID
-- VITE_FRONTEND_FORGE_API_KEY
-- VITE_FRONTEND_FORGE_API_URL (opcional; há fallback no código)
-- VITE_ANALYTICS_ENDPOINT
-- VITE_ANALYTICS_WEBSITE_ID
+Configurado via `vercel.json`:
+- `buildCommand`: `pnpm vite build`
+- `outputDirectory`: `dist/public`
+- Rewrite global para `/index.html` (suporte SPA)
 
-Se alguma variável obrigatória estiver ausente no ambiente de produção, o comportamento pode variar entre falha funcional parcial e tela sem conteúdo útil em algumas seções.
+### Node próprio
 
-## Build e execução em produção (Node)
-
-Fluxo para hospedar com servidor próprio:
-
-1. Gerar build completo
-
+```bash
 pnpm build
-
-2. Subir servidor
-
 pnpm start
+```
 
-Nesse fluxo:
+## Assets
 
-- O frontend é gerado em dist/public
-- O servidor é gerado em dist/index.js
-- O Express serve index.html para qualquer rota, suportando SPA
+Os assets de marca ficam em `client/public/assets/`:
 
-## Deploy no Vercel
-
-Este repositório está configurado para deploy estático no Vercel via vercel.json:
-
-- installCommand: pnpm install --frozen-lockfile
-- buildCommand: pnpm vite build
-- outputDirectory: dist/public
-- rewrite global para /index.html
-
-Isso garante compatibilidade com roteamento client-side da SPA.
-
-## Diagnóstico de erro comum no Vercel
-
-Quando o deploy "sobe" mas o site não carrega corretamente, os problemas mais comuns são:
-
-1. Diretório de saída incorreto
-
-- O Vercel precisa apontar para dist/public (não para dist).
-
-2. Falta de rewrite para SPA
-
-- Rotas internas precisam redirecionar para /index.html.
-
-3. Variáveis de ambiente ausentes
-
-- Verificar todas as VITE\_ no painel do projeto no Vercel.
-
-4. Comando de build incompatível com o alvo
-
-- Para deploy estático no Vercel, o build recomendado neste projeto é pnpm vite build.
-
-## Observações sobre o servidor (server/index.ts)
-
-O trecho compilado com algo como:
-
-const port = process.env.PORT || 3e3;
-
-é equivalente a usar 3000 (notação científica em JavaScript) e não representa erro por si só. Isso é apenas resultado de transformação/minificação do build.
-
-## Melhorias futuras sugeridas
-
-- Criar arquivo .env.example com todas as variáveis VITE\_
-- Adicionar testes de componentes críticos (Home, Projects, Contact)
-- Adicionar verificação de variáveis obrigatórias no startup do app
-- Configurar pipeline de CI para lint, check e build
+- `filipe-portrait.jpg` — foto do nav (avatar circular)
+- `filipe-secondary.jpg` — foto do hero (retrato 3:4)
+- `hero-video.mp4` — vídeo de fundo do hero
+- `gear.svg` — ícone de engrenagem de marca
+- `fp-monogram.svg` — monograma FP
