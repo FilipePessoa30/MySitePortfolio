@@ -3,10 +3,10 @@ import { Icon, ScrollReveal, SectionHeading, TechnicalGrid } from './portfolio-k
 
 export const Projects: React.FC = () => {
   const items = [
-    { tag: 'DOUTORADO', title: 'Otimização de Sistemas Energéticos Híbridos', desc: 'Modelos MILP combinados com redes neurais para operação ótima de microgrids solares-eólicos.', tech: ['Python', 'Pyomo', 'Gurobi', 'PyTorch'], color: '#8b1e3f', year: '2025', href: 'https://github.com/FilipePessoa30/MulticriteriaMicrogrid' },
-    { tag: 'PESQUISA', title: 'Scheduling Estocástico em Manufatura', desc: 'Algoritmos híbridos metaheurística + ML para job-shop scheduling com incerteza de demanda.', tech: ['C++', 'OR-Tools', 'scikit-learn'], color: '#1e4e8c', year: '2024', href: 'https://github.com/FilipePessoa30/BRKGP---Symbolic-Regression' },
-    { tag: 'MESTRADO', title: 'Previsão de Demanda em Supply Chains', desc: 'Ensemble de modelos ARIMA, LSTM e XGBoost para cadeias industriais brasileiras.', tech: ['R', 'Python', 'TensorFlow'], color: '#00c853', year: '2023', href: 'https://github.com/FilipePessoa30/Predicted_INPC' },
-    { tag: 'ACADÊMICO', title: 'Simulação Monte Carlo · Confiabilidade', desc: 'Análise de confiabilidade de sistemas em paralelo-série com dependência estocástica.', tech: ['Python', 'NumPy', 'SciPy'], color: '#1e4e8c', year: '2023', href: 'https://github.com/FilipePessoa30/benchmark-v1' },
+    { tag: 'MCDM · MESTRADO', title: 'MulticriteriaMicrogrid', desc: 'Framework AHP com otimização metaheurística (GA, PSO, SA) para avaliação de microgrids renováveis via Fuzzy-TOPSIS, VIKOR, COPRAS e MOORA.', tech: ['Python', 'AHP', 'MCDM', 'Metaheurísticas'], color: '#8b1e3f', year: '2026', href: 'https://github.com/FilipePessoa30/MulticriteriaMicrogrid' },
+    { tag: 'PESQUISA · C++', title: 'BRKGP · Symbolic Regression', desc: 'Regressão simbólica com BRKGA para descoberta de expressões matemáticas a partir de dados, com consistência dimensional por unidades físicas.', tech: ['C++', 'BRKGA', 'Regressão Simbólica'], color: '#1e4e8c', year: '2026', href: 'https://github.com/FilipePessoa30/BRKGP---Symbolic-Regression' },
+    { tag: 'ML · DADOS', title: 'Predicted INPC', desc: 'Previsão do INPC com 8 modelos de regressão (Ridge, SVR, XGBoost, CatBoost) e otimização via hyperopt. Ridge alcançou R² de 0.9668 no teste.', tech: ['Python', 'XGBoost', 'CatBoost', 'hyperopt'], color: '#00c853', year: '2026', href: 'https://github.com/FilipePessoa30/Predicted_INPC' },
+    { tag: 'DOUTORADO · AGV', title: 'benchmark-v1', desc: 'Scheduling de veículos elétricos autônomos em terminais portuários via Programação Genética, co-evoluindo regras de despacho e estratégias de carregamento.', tech: ['Python', 'Prog. Genética', 'AGV', 'Logística'], color: '#1e4e8c', year: '2026', href: 'https://github.com/FilipePessoa30/benchmark-v1' },
   ];
 
   return (
