@@ -3,10 +3,10 @@ import { Icon, ScrollReveal, SectionHeading, TechnicalGrid } from './portfolio-k
 
 export const Projects: React.FC = () => {
   const items = [
-    { tag: 'DOUTORADO', title: 'Otimização de Sistemas Energéticos Híbridos', desc: 'Modelos MILP combinados com redes neurais para operação ótima de microgrids solares-eólicos.', tech: ['Python', 'Pyomo', 'Gurobi', 'PyTorch'], color: '#8b1e3f', year: '2025' },
-    { tag: 'PESQUISA', title: 'Scheduling Estocástico em Manufatura', desc: 'Algoritmos híbridos metaheurística + ML para job-shop scheduling com incerteza de demanda.', tech: ['C++', 'OR-Tools', 'scikit-learn'], color: '#1e4e8c', year: '2024' },
-    { tag: 'MESTRADO', title: 'Previsão de Demanda em Supply Chains', desc: 'Ensemble de modelos ARIMA, LSTM e XGBoost para cadeias industriais brasileiras.', tech: ['R', 'Python', 'TensorFlow'], color: '#00c853', year: '2023' },
-    { tag: 'ACADÊMICO', title: 'Simulação Monte Carlo · Confiabilidade', desc: 'Análise de confiabilidade de sistemas em paralelo-série com dependência estocástica.', tech: ['Python', 'NumPy', 'SciPy'], color: '#1e4e8c', year: '2023' },
+    { tag: 'DOUTORADO', title: 'Otimização de Sistemas Energéticos Híbridos', desc: 'Modelos MILP combinados com redes neurais para operação ótima de microgrids solares-eólicos.', tech: ['Python', 'Pyomo', 'Gurobi', 'PyTorch'], color: '#8b1e3f', year: '2025', href: 'https://github.com/FilipePessoa30/MulticriteriaMicrogrid' },
+    { tag: 'PESQUISA', title: 'Scheduling Estocástico em Manufatura', desc: 'Algoritmos híbridos metaheurística + ML para job-shop scheduling com incerteza de demanda.', tech: ['C++', 'OR-Tools', 'scikit-learn'], color: '#1e4e8c', year: '2024', href: 'https://github.com/FilipePessoa30/BRKGP---Symbolic-Regression' },
+    { tag: 'MESTRADO', title: 'Previsão de Demanda em Supply Chains', desc: 'Ensemble de modelos ARIMA, LSTM e XGBoost para cadeias industriais brasileiras.', tech: ['R', 'Python', 'TensorFlow'], color: '#00c853', year: '2023', href: 'https://github.com/FilipePessoa30/Predicted_INPC' },
+    { tag: 'ACADÊMICO', title: 'Simulação Monte Carlo · Confiabilidade', desc: 'Análise de confiabilidade de sistemas em paralelo-série com dependência estocástica.', tech: ['Python', 'NumPy', 'SciPy'], color: '#1e4e8c', year: '2023', href: 'https://github.com/FilipePessoa30/benchmark-v1' },
   ];
 
   return (
@@ -29,7 +29,7 @@ export const Projects: React.FC = () => {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 18 }}>
                 {p.tech.map((t) => <span key={t} style={{ fontFamily: 'var(--fp-font-mono)', fontSize: 11, padding: '3px 8px', borderRadius: 4, background: 'var(--fp-bg-2)', color: 'var(--fp-fg-1)' }}>{t}</span>)}
               </div>
-              <a href="#" onClick={(e) => e.preventDefault()} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, fontFamily: 'var(--fp-font-mono)', color: p.color, textDecoration: 'none', letterSpacing: '.03em' }}>
+              <a href={p.href} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, fontFamily: 'var(--fp-font-mono)', color: p.color, textDecoration: 'none', letterSpacing: '.03em' }}>
                 VER DETALHES <Icon name="arrow-up-right" size={14} />
               </a>
             </ScrollReveal>
